@@ -10,6 +10,7 @@ import Loading from "~ui/common/Loading";
 import Note from "./Note";
 import { AppScreens } from "~types/app/AppScreens";
 import { useNotesReactions } from "~lib/nostr/useNotesReactions";
+import { useNostrStore } from "~lib/zustand/nostr";
 
 export default function NotesList({}: {}) {
   const pageUrl = useAppStore((state) => state.pageUrl);
@@ -18,6 +19,7 @@ export default function NotesList({}: {}) {
   const [query, setQuery] = useState<boolean>(false);
   const settings = useAppStore((state) => state.settings);
   const setPage = useAppStore((state) => state.setPage);
+  const user = useNostrStore((state) => state.user);
 
   const { data: notes, isFetching } = useNotes({
     key: notesView == NotesView.Page ? pageUrl : domain,
@@ -66,9 +68,15 @@ export default function NotesList({}: {}) {
             ) : (
               <Flex direction="column" align="center" gap="4">
                 <Text>No posts yet</Text>
-                <Button onClick={() => setPage(AppScreens.NewNote)}>
-                  <Pencil1Icon width="16" height="16" /> Write something?
-                </Button>
+                {user ? (
+                  <Button onClick={() => setPage(AppScreens.NewNote)}>
+                    <Pencil1Icon width="16" height="16" /> Write something?
+                  </Button>
+                ) : (
+                  <Text size="2">
+                    Sign in via the extension to post something
+                  </Text>
+                )}
               </Flex>
             )}
           </>
