@@ -1,7 +1,7 @@
 {
   "name": "web-content-conversation",
   "displayName": "Web Content Conversation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bringing content and conversation together.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
@@ -37,7 +37,8 @@
     "postcss": "^8.4.33",
     "prettier": "3.0.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "vm-browserify": "^1.1.2"
   },
   "manifest": {
     "host_permissions": [

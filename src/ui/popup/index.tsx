@@ -1,5 +1,5 @@
 import { Box, ScrollArea, Tabs } from "@radix-ui/themes";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Storage } from "@plasmohq/storage";
 
@@ -7,7 +7,7 @@ import { POPUP_HEIGHT } from "~constants/popup";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { usePopupStore } from "~lib/zustand/popup";
 import { PopupScreens } from "~types/app/PopupScreens";
-import { DEFAULT_SETTINGS, type Settings } from "~types/Settings";
+import { type Settings } from "~types/Settings";
 import Loading from "~ui/common/Loading";
 import UI from "~ui/common/UI";
 
@@ -16,6 +16,8 @@ import Account from "./Account";
 import Posts from "./Posts";
 import UserCreate from "./UserCreate";
 import Welcome from "./Welcome";
+import { DEFAULT_SETTINGS } from "~constants/settings";
+import { merge } from "lodash";
 
 export default function UiPopup() {
   const user = useNostrStore((state) => state.user);
@@ -39,6 +41,7 @@ export default function UiPopup() {
 
 function IsLoggedIn() {
   const setSettings = usePopupStore((state) => state.setSettings);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     async function init() {
@@ -46,11 +49,16 @@ function IsLoggedIn() {
       let settings = (await storage.get("settings")) as Settings | undefined;
       if (settings === undefined) {
         settings = DEFAULT_SETTINGS;
+      } else {
+        settings = merge(DEFAULT_SETTINGS, settings);
       }
       setSettings(settings);
+      setLoaded(true);
     }
     init();
   }, []);
+
+  if (!loaded) return <></>;
 
   return (
     <Tabs.Root defaultValue="appearance">

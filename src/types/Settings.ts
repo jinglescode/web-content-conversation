@@ -1,5 +1,3 @@
-import { EXPLICIT_RELAY_URLS } from "~constants/nostr";
-
 export type Settings = {
   appearance: {
     iconDisplay: boolean;
@@ -13,21 +11,6 @@ export type Settings = {
     shorten: boolean;
     credit: boolean;
     sortBy: string;
+    nostrIcons: boolean;
   };
-};
-
-export const DEFAULT_SETTINGS: Settings = {
-  appearance: {
-    iconDisplay: true,
-    iconPlacement: "bottom",
-    windowSize: "large",
-  },
-  nostr: {
-    relays: EXPLICIT_RELAY_URLS,
-  },
-  notes: {
-    shorten: true,
-    credit: true,
-    sortBy: "time",
-  },
 };

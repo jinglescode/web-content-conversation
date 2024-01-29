@@ -47,6 +47,7 @@ export default function UserCreate() {
               placeholder="Enter your display name"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+              disabled={loading}
             />
           </TextField.Root>
           <Button onClick={() => createUser()} disabled={loading}>

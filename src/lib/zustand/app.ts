@@ -1,26 +1,27 @@
-import { create } from "zustand"
+import { create } from "zustand";
+import { DEFAULT_SETTINGS } from "~constants/settings";
 
-import { AppScreens } from "~types/app/AppScreens"
-import { NotesView } from "~types/app/NotesView"
-import { DEFAULT_SETTINGS, type Settings } from "~types/Settings"
+import { AppScreens } from "~types/app/AppScreens";
+import { NotesView } from "~types/app/NotesView";
+import { type Settings } from "~types/Settings";
 
 interface AppState {
-  isDrawerShowing: boolean
-  setDrawerShowing: (state: boolean) => void
-  page: AppScreens
-  setPage: (page: AppScreens) => void
-  pageTitle: string
-  setPageTitle: (pageTitle: string) => void
-  pageUrl: string
-  setPageUrl: (pageUrl: string) => void
-  domain: string
-  setDomain: (pageUrl: string) => void
-  notesView: NotesView
-  setNotesView: (view: NotesView) => void
-  settings: Settings
-  setSettings: (page: Settings) => void
-  toast: string | undefined
-  setToast: (toast: string | undefined) => void
+  isDrawerShowing: boolean;
+  setDrawerShowing: (state: boolean) => void;
+  page: AppScreens;
+  setPage: (page: AppScreens) => void;
+  pageTitle: string;
+  setPageTitle: (pageTitle: string) => void;
+  pageUrl: string;
+  setPageUrl: (pageUrl: string) => void;
+  domain: string;
+  setDomain: (pageUrl: string) => void;
+  notesView: NotesView;
+  setNotesView: (view: NotesView) => void;
+  settings: Settings;
+  setSettings: (page: Settings) => void;
+  toast: string | undefined;
+  setToast: (toast: string | undefined) => void;
 }
 
 export const useAppStore = create<AppState>()((set, get) => ({
@@ -38,8 +39,8 @@ export const useAppStore = create<AppState>()((set, get) => ({
   setNotesView: (view: NotesView) => set({ notesView: view }),
   settings: DEFAULT_SETTINGS,
   setSettings: (settings) => {
-    set({ settings })
+    set({ settings });
   },
   toast: undefined,
-  setToast: (toast) => set({ toast })
-}))
+  setToast: (toast) => set({ toast }),
+}));

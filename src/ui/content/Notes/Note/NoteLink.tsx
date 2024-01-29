@@ -1,11 +1,11 @@
 import { Link } from "@radix-ui/themes";
 
 export default function NoteLink({
+  children,
   url,
-  label,
 }: {
+  children: React.ReactNode;
   url: string;
-  label: string;
 }) {
   return (
     <Link
@@ -18,7 +18,7 @@ export default function NoteLink({
         wordBreak: "break-all",
       }}
     >
-      {label}
+      {children}
     </Link>
   );
 }

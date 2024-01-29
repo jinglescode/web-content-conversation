@@ -20,7 +20,7 @@ Say goodbye to navigating through different forums or waiting on customer suppor
 
 As we are in beta, the extension is not yet available on the Chrome Web Store. These steps will load the extension locally on your browser.
 
-1. Download latest release from [GitHub](https://github.com/jinglescode/web-content-conversation/raw/main/releases/web-content-conversation-0.0.2.zip)
+1. Download latest release from [GitHub](https://github.com/jinglescode/web-content-conversation/raw/main/releases/web-content-conversation.zip)
 2. Unzip the zip file
 3. From Chrome browser, go to `chrome://extensions/`
 4. Enable Developer mode

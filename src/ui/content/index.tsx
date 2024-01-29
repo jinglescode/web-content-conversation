@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { EXTENSION_KEY } from "~constants/chrome";
 
 import { messageBackgroundRelay } from "~lib/chrome";
 import { useAppStore } from "~lib/zustand/app";
-import { DEFAULT_SETTINGS } from "~types/Settings";
 import UI from "~ui/common/UI";
 import Drawer from "~ui/content/Drawer";
 import PageCard from "~ui/content/PageCard";
 import { merge } from "lodash";
+import { DEFAULT_SETTINGS } from "~constants/settings";
 
 export default function UiContent() {
   const setPageTitle = useAppStore((state) => state.setPageTitle);
@@ -15,6 +15,7 @@ export default function UiContent() {
   const setDomain = useAppStore((state) => state.setDomain);
   const settings = useAppStore((state) => state.settings);
   const setSettings = useAppStore((state) => state.setSettings);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   function handlePageUpdate(title, url, domain) {
     setPageUrl(url);
@@ -27,12 +28,13 @@ export default function UiContent() {
       const tab = await messageBackgroundRelay("tabs/query-active");
       handlePageUpdate(tab.title, tab.url, window.location.hostname);
       let settings = await messageBackgroundRelay("storage/get-settings");
-      if (settings) {
-        settings = merge(settings, DEFAULT_SETTINGS);
-      } else {
+      if (settings === undefined) {
         settings = DEFAULT_SETTINGS;
+      } else {
+        settings = merge(DEFAULT_SETTINGS, settings);
       }
       setSettings(settings);
+      setLoaded(true);
     }
     getOnloadTab();
   }, []);
@@ -54,6 +56,8 @@ export default function UiContent() {
       }
     } catch (error) {}
   }, []);
+
+  if (!loaded) return <></>;
 
   if (settings.appearance.iconDisplay === false) return <></>;
 

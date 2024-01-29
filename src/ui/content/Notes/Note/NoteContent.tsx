@@ -7,26 +7,37 @@ import { IMAGES, AUDIOS, VIDEOS } from "~constants/files";
 import reactStringReplace from "react-string-replace";
 import { nanoid } from "nanoid";
 import NoteLink from "./NoteLink";
+import { useAppStore } from "~lib/zustand/app";
+import { FileIcon, PersonIcon } from "@radix-ui/react-icons";
 
 export default function NoteContent({ event }: { event: NDKEvent }) {
+  const pageUrl = useAppStore((state) => state.pageUrl);
+  const settings = useAppStore((state) => state.settings);
+
   function getLastIndexOfChar(content: string, char: string) {
     return content.lastIndexOf(char);
   }
 
-  function prepareContent(content: string) {
-    // remove url attached by app
+  function removeW3LinkLastLine(content: string) {
+    // remove shorten url attached by app
     const lastDoubleNewLine = getLastIndexOfChar(content, "\n\n");
-    const lastHttp = getLastIndexOfChar(content, "http");
+    const lastHttp = getLastIndexOfChar(content, "https://w3.do/");
     if (lastDoubleNewLine > 0 && lastHttp - lastDoubleNewLine == 2) {
       return content.substring(0, lastDoubleNewLine);
     }
     return content;
   }
 
+  function removePageUrl(content: string) {
+    // todo: how to make it more fuzzy search?
+    content = removeW3LinkLastLine(content);
+    return content.replace(pageUrl, "");
+  }
+
   const richContent = useMemo(() => {
     let content = event.content;
 
-    content = prepareContent(content);
+    content = removePageUrl(content);
 
     let parsedContent: string | ReactNode[] = stripHtml(
       content.replace(/\n{2,}\s*/g, "\n")
@@ -156,11 +167,17 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
             parsedContent,
             event,
             (match, i) => (
-              <NoteLink
-                key={nanoid()}
-                url={`https://njump.me/${event}`}
-                label={event}
-              />
+              <NoteLink key={nanoid()} url={`https://njump.me/${event}`}>
+                {settings.notes.nostrIcons ? (
+                  <FileIcon
+                    width="16"
+                    height="16"
+                    style={{ display: "inline-block" }}
+                  />
+                ) : (
+                  event
+                )}
+              </NoteLink>
             )
           );
         }
@@ -172,11 +189,17 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
             parsedContent,
             mention,
             (match, i) => (
-              <NoteLink
-                key={nanoid()}
-                url={`https://njump.me/${mention}`}
-                label={mention}
-              />
+              <NoteLink key={nanoid()} url={`https://njump.me/${mention}`}>
+                {settings.notes.nostrIcons ? (
+                  <PersonIcon
+                    width="16"
+                    height="16"
+                    style={{ display: "inline-block" }}
+                  />
+                ) : (
+                  mention
+                )}
+              </NoteLink>
             )
           );
         }
@@ -189,11 +212,9 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
           const url = new URL(match);
 
           return (
-            <NoteLink
-              key={nanoid()}
-              url={url.toString()}
-              label={url.toString()}
-            />
+            <NoteLink key={nanoid()} url={url.toString()}>
+              {url.toString()}
+            </NoteLink>
           );
         }
       );

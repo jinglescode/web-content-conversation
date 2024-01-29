@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { ACCENT_COLOR, HIGHLIGHT_COLOR } from "~constants/radix";
 import { useNotesReactions } from "~lib/nostr/useNotesReactions";
 import { useNotesReactionsMutation } from "~lib/nostr/useNotesReactionsMutation";
-import { useAppStore } from "~lib/zustand/app";
 import { useNostrStore } from "~lib/zustand/nostr";
 
 import ReplyBox from "../ReplyBox";
@@ -123,13 +122,15 @@ export default function NoteControls({
             </Button>
           )}
           {user && (
-            <Button
-              variant="ghost"
-              onClick={() => setShowReplySection(!showReplySection)}
-              color={showReplySection ? HIGHLIGHT_COLOR : ACCENT_COLOR}
-            >
-              Reply
-            </Button>
+            <>
+              <Button
+                variant="ghost"
+                onClick={() => setShowReplySection(!showReplySection)}
+                color={showReplySection ? HIGHLIGHT_COLOR : ACCENT_COLOR}
+              >
+                Reply
+              </Button>
+            </>
           )}
         </Flex>
         {showReplySection && (
