@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import NoteLink from "./NoteLink";
 import { useAppStore } from "~lib/zustand/app";
 import { FileIcon, PersonIcon } from "@radix-ui/react-icons";
+import NoteImage from "./NoteImage";
 
 export default function NoteContent({ event }: { event: NDKEvent }) {
   const pageUrl = useAppStore((state) => state.pageUrl);
@@ -99,17 +100,7 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
           parsedContent = reactStringReplace(
             parsedContent,
             image,
-            (match, i) => (
-              <img
-                key={match + i}
-                src={match}
-                alt={match}
-                loading="lazy"
-                decoding="async"
-                style={{ contentVisibility: "auto" }}
-                className="object-cover w-full h-auto rounded-xl"
-              />
-            )
+            (match, i) => <NoteImage src={match} key={match + i} />
           );
         }
       }

@@ -1,7 +1,7 @@
 {
   "name": "web-content-conversation",
   "displayName": "Web Content Conversation",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Bringing content and conversation together.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
