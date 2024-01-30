@@ -32,7 +32,7 @@ export default function UserCreate() {
       <Flex direction="column" align="center" gap="4">
         <Avatar
           size="9"
-          src={chrome.runtime.getURL("assets/nostr-icon-white-on-purple.svg")}
+          src={chrome.runtime.getURL("assets/icon.svg")}
           radius="full"
           fallback=""
         />

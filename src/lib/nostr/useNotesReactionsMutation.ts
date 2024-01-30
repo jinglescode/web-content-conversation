@@ -1,24 +1,24 @@
-import type { NDKEvent } from "@nostr-dev-kit/ndk"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { NDKEvent } from "@nostr-dev-kit/ndk";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useNotesReactionsMutation() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
       event,
-      reaction
+      reaction,
     }: {
-      event: NDKEvent
-      reaction: string
+      event: NDKEvent;
+      reaction: string;
     }) => {
-      await event.react(reaction)
-      return { event, reaction }
+      await event.react(reaction);
+      return { event, reaction };
     },
     onSettled: async (props) => {
       queryClient.invalidateQueries({
-        queryKey: ["reactions", props.event.id]
-      })
-    }
-  })
+        queryKey: ["reactions", props.event.id],
+      });
+    },
+  });
 }

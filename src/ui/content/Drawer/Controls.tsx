@@ -11,7 +11,7 @@ import { useAppStore } from "~lib/zustand/app";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { AppScreens } from "~types/app/AppScreens";
 import { NotesView } from "~types/app/NotesView";
-import icon from "../../../../assets/nostr-icon-white-on-purple.svg";
+import icon from "../../../../assets/icon.svg";
 
 export default function Controls() {
   const isDrawerShowing = useAppStore((state) => state.isDrawerShowing);
@@ -31,7 +31,7 @@ export default function Controls() {
         {isDrawerShowing ? (
           <DoubleArrowRightIcon width="16" height="16" />
         ) : (
-          <Avatar src={icon} fallback="" />
+          <Avatar src={icon} fallback="" style={{ borderRadius: "initial" }} />
         )}
       </Button>
       {isDrawerShowing && (
