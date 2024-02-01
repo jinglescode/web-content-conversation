@@ -2,6 +2,7 @@ import { Box, Flex, Text } from "@radix-ui/themes";
 
 import { useAppStore } from "~lib/zustand/app";
 import { useNostrStore } from "~lib/zustand/nostr";
+import { AppScreens } from "~types/app/AppScreens";
 import { NotesView } from "~types/app/NotesView";
 import UserAvatar from "~ui/common/UserAvatar";
 
@@ -10,6 +11,7 @@ export default function TopBar() {
   const pageTitle = useAppStore((state) => state.pageTitle);
   const notesView = useAppStore((state) => state.notesView);
   const domain = useAppStore((state) => state.domain);
+  const page = useAppStore((state) => state.page);
 
   return (
     <Flex
@@ -23,7 +25,14 @@ export default function TopBar() {
     >
       <Box>
         <Text as="div" size="2" weight="bold">
-          {notesView == NotesView.Page ? pageTitle : `Global Feed - ${domain}`}
+          {page == AppScreens.Feed && (
+            <>
+              {notesView == NotesView.Page
+                ? pageTitle
+                : `Global Feed - ${domain}`}
+            </>
+          )}
+          {page == AppScreens.NewNote && `New Note - ${pageTitle}`}
         </Text>
       </Box>
       <UserAvatar pubkey={user ? user.pubkey : undefined} />

@@ -13,24 +13,27 @@ export default function UserAvatar({
   const queryClient = useQueryClient();
   const { data: profile } = useUserProfile(pubkey);
   return (
-    <Avatar
-      size={size}
-      src={
-        profile !== undefined
-          ? profile.image
-            ? profile.image
-            : undefined
-          : chrome.runtime.getURL("assets/icon.svg")
-      }
-      radius="full"
-      fallback={
-        profile ? (profile.name ? profile.name.substring(0, 1) : "") : ""
-      }
+    <div
       onClick={() => {
         queryClient.invalidateQueries({
           queryKey: ["user", pubkey],
         });
       }}
-    />
+    >
+      <Avatar
+        size={size}
+        src={
+          profile !== undefined
+            ? profile.image
+              ? profile.image
+              : undefined
+            : chrome.runtime.getURL("assets/icon.svg")
+        }
+        radius="full"
+        fallback={
+          profile ? (profile.name ? profile.name.substring(0, 1) : "") : ""
+        }
+      />
+    </div>
   );
 }

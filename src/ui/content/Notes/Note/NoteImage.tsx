@@ -18,7 +18,6 @@ export default function NoteImage({ src }: { src: string }) {
           className="object-cover w-full h-auto rounded-xl"
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
-            console.log("err image", src);
             setHasError(true);
           }}
         />

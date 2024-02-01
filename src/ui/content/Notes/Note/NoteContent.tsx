@@ -220,7 +220,7 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
 
       return parsedContent;
     } catch (e) {
-      console.warn(event.id, `[parser] parse failed: ${e}`);
+      console.error(`[NoteContent] richContent - ${e}`);
       return parsedContent;
     }
   }, [event.content]);

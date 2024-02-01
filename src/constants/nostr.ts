@@ -2,12 +2,12 @@ export const EXPLICIT_RELAY_URLS = [
   "wss://relay.damus.io",
   "wss://relay.nostr.band",
   "wss://nos.lol",
-  "wss://nostr.mutinywallet.com"
-]
+  "wss://nostr.mutinywallet.com",
+];
 
-export const STALE_TIME = 1000 * 60 * 60 * 24
+export const STALE_TIME = 0; // 1000 * 60 * 60 * 24
 
-export const RELAY = "wss://relay.damus.io"
+export const RELAY = "wss://relay.damus.io";
 
 export const NOSTR_EVENTS = [
   "@nevent1",

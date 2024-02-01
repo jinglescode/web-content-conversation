@@ -1,20 +1,10 @@
-## Bringing content and conversation together.
+## Bringing collaborative layer to your Internet browsing experience
 
-Welcome to a revolutionary online experience that seamlessly integrates web content and conversation, transforming the way we engage with information on the web.
+Enabling collaborative knowledge sharing by integrating web content and online discussions, transforming the way we engage with information on the web.
 
-![screenshot](https://github.com/jinglescode/web-content-conversation/raw/main/assets/screenshot-nostrcom.png)
-
-### Discover the Power of Collaboration
-
-[App Name] introduces a social and collaborative layer to the internet, re-defining online discussions.
-
-### Explore a New Dimension of Interaction
-
-You can effortlessly share ideas, pose questions, and engage with others, all directly within the context of the web content you're exploring.
-
-### Community Driven Knowledge Base
-
-Say goodbye to navigating through different forums or waiting on customer support. [App Name] creates a unified, crowdsourced knowledge base that empowers you to ask questions and seek insights on any sites.
+| Explore a new dimension of interaction |   |
+|---|---|
+| ![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/screenshot-discuss.png) | Introduces a social and collaborative layer to the internet, re-defining online discussions. You can effortlessly share ideas, pose questions, and engage with others, all directly within the context of the web content you're exploring. |
 
 ## Getting Started
 

@@ -38,7 +38,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       await _nostr.init();
       return _nostr;
     } catch (e) {
-      console.error(`Unable to init NostrProvider`, e);
+      console.error(`[NostrProvider] initNostrClass - ${e}`);
     }
   }
 
@@ -104,7 +104,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
         }
         setUser(_user);
       } catch (e) {
-        console.error("Did not load user", e);
+        console.error(`[NostrProvider] load - ${e}`);
       }
     }
     load();

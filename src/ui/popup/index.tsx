@@ -8,7 +8,6 @@ import { useNostrStore } from "~lib/zustand/nostr";
 import { usePopupStore } from "~lib/zustand/popup";
 import { PopupScreens } from "~types/app/PopupScreens";
 import { type Settings } from "~types/Settings";
-import Loading from "~ui/common/Loading";
 import UI from "~ui/common/UI";
 
 import Appearance from "./Appearance";
@@ -18,6 +17,7 @@ import UserCreate from "./UserCreate";
 import Welcome from "./Welcome";
 import { DEFAULT_SETTINGS } from "~constants/settings";
 import { merge } from "lodash";
+import About from "./About";
 
 export default function UiPopup() {
   const user = useNostrStore((state) => state.user);
@@ -27,7 +27,7 @@ export default function UiPopup() {
       <UI>
         {user === undefined ? (
           <div style={{ height: POPUP_HEIGHT }}>
-            <Loading />
+            <About />
           </div>
         ) : user ? (
           <IsLoggedIn />
@@ -66,6 +66,7 @@ function IsLoggedIn() {
         <Tabs.Trigger value="appearance">Appearance</Tabs.Trigger>
         <Tabs.Trigger value="account">Account</Tabs.Trigger>
         <Tabs.Trigger value="posts">Posts</Tabs.Trigger>
+        <Tabs.Trigger value="about">About</Tabs.Trigger>
       </Tabs.List>
 
       <ScrollArea
@@ -82,6 +83,9 @@ function IsLoggedIn() {
           </Tabs.Content>
           <Tabs.Content value="posts">
             <Posts />
+          </Tabs.Content>
+          <Tabs.Content value="about">
+            <About />
           </Tabs.Content>
         </Box>
       </ScrollArea>

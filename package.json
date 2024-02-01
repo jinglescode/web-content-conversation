@@ -1,8 +1,8 @@
 {
   "name": "web-content-conversation",
   "displayName": "Web Content Conversation",
-  "version": "0.0.5",
-  "description": "Bringing content and conversation together.",
+  "version": "0.0.6",
+  "description": "Enabling collaborative knowledge sharing by integrating web content and online discussions, transforming the way we engage with information on the web.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
     "start": "next start",

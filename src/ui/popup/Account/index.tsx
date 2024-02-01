@@ -3,7 +3,6 @@ import { Table } from "@radix-ui/themes";
 import Npub from "./Npub";
 import Nsec from "./Nsec";
 import Signout from "./Signout";
-import DisplayName from "./DisplayName";
 
 export default function Account() {
   return (

@@ -5,11 +5,11 @@ import {
   Button,
   Flex,
   Heading,
-  Separator,
   Text,
   TextField,
 } from "@radix-ui/themes";
 import { useState } from "react";
+import { APP_DESC, APP_NAME } from "~constants/global";
 
 import { useNostr } from "~lib/nostr/NostrProvider";
 import { usePopupStore } from "~lib/zustand/popup";
@@ -33,18 +33,14 @@ export default function Welcome() {
     <Box p="4">
       <Flex direction="column" align="center" gap="4">
         <Avatar
-          size="9"
+          size="6"
           src={chrome.runtime.getURL("assets/icon.svg")}
           radius="full"
           fallback=""
+          style={{ borderRadius: "initial" }}
         />
-        <Heading size="7">
-          [App Name]
-        </Heading>
-        <Text align="center">
-          Empowering collaborative knowledge sharing by bringing content and
-          conversation together.
-        </Text>
+        <Heading size="7">{APP_NAME}</Heading>
+        <Text align="center">{APP_DESC}</Text>
         <Flex gap="1" style={{ width: "100%" }}>
           <TextField.Root style={{ width: "100%" }}>
             <TextField.Slot>

@@ -11,7 +11,7 @@ export const DEFAULT_SETTINGS: Settings = {
     relays: EXPLICIT_RELAY_URLS,
   },
   notes: {
-    shorten: true,
+    shorten: false,
     credit: true,
     sortBy: "time",
     nostrIcons: true,

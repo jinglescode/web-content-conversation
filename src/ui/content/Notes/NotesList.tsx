@@ -1,36 +1,18 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { Button, Flex, ScrollArea, Text } from "@radix-ui/themes";
-import { useEffect, useState } from "react";
 
-import { useNotes } from "~lib/nostr/useNotes";
 import { useAppStore } from "~lib/zustand/app";
-import { NotesView } from "~types/app/NotesView";
 import Loading from "~ui/common/Loading";
 
 import Note from "./Note";
 import { AppScreens } from "~types/app/AppScreens";
-import { useNotesReactions } from "~lib/nostr/useNotesReactions";
 import { useNostrStore } from "~lib/zustand/nostr";
+import type { NDKEvent } from "@nostr-dev-kit/ndk";
 
-export default function NotesList({}: {}) {
-  const pageUrl = useAppStore((state) => state.pageUrl);
-  const domain = useAppStore((state) => state.domain);
-  const notesView = useAppStore((state) => state.notesView);
-  const [query, setQuery] = useState<boolean>(false);
+export default function NotesList({ notes }: { notes: NDKEvent[] }) {
   const settings = useAppStore((state) => state.settings);
   const setPage = useAppStore((state) => state.setPage);
   const user = useNostrStore((state) => state.user);
-
-  const { data: notes, isFetching } = useNotes({
-    key: notesView == NotesView.Page ? pageUrl : domain,
-    query,
-  });
-
-  useEffect(() => {
-    if (pageUrl) {
-      setQuery(true);
-    }
-  }, [pageUrl]);
 
   function sortNotes(a, b) {
     // todo future features: sort by time and reactions counts

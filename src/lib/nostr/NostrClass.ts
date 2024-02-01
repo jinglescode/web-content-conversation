@@ -20,7 +20,7 @@ export default class NostrClass {
       await ndk.connect();
       this.ndk = ndk;
     } catch (e) {
-      console.error("NDK error", e);
+      console.error(`[NostrClass] init ${e}`);
     }
   }
 
