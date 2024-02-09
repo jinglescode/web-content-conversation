@@ -68,6 +68,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
     };
     setUser(user);
 
+    //@ts-ignore
     await messageBackground("storage/set-user", user);
   }
 
@@ -87,6 +88,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       };
       setUser(user);
 
+      //@ts-ignore
       await messageBackground("storage/set-user", user);
     }
   }

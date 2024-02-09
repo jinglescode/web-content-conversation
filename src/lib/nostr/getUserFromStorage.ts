@@ -4,6 +4,7 @@ import type { UserIdentifier } from "~types/nostr/UserIdentifier"
 import type NostrClass from "./NostrClass"
 
 export async function _getUserFromStorage(nostr: NostrClass) {
+  //@ts-ignore
   const storageUser = await messageBackground("storage/get-user")
 
   if (storageUser) {
