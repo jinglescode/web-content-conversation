@@ -5,6 +5,7 @@ import {
   Button,
   Flex,
   Heading,
+  Separator,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -15,7 +16,11 @@ import { useNostr } from "~lib/nostr/NostrProvider";
 import { usePopupStore } from "~lib/zustand/popup";
 import { PopupScreens } from "~types/app/PopupScreens";
 
-export default function Welcome() {
+export default function Welcome({
+  setCreateScreen,
+}: {
+  setCreateScreen: (val: boolean) => void;
+}) {
   const setPage = usePopupStore((state) => state.setPage);
   const { signInNsec } = useNostr();
   const [nsec, setNsec] = useState<string>("");
@@ -32,15 +37,9 @@ export default function Welcome() {
   return (
     <Box p="4">
       <Flex direction="column" align="center" gap="4">
-        <Avatar
-          size="6"
-          src={chrome.runtime.getURL("assets/icon.svg")}
-          radius="full"
-          fallback=""
-          style={{ borderRadius: "initial" }}
-        />
-        <Heading size="7">{APP_NAME}</Heading>
-        <Text align="center">{APP_DESC}</Text>
+        <Heading size="7">Sign In</Heading>
+        <Text align="center">Enter your nsec to get started.</Text>
+
         <Flex gap="1" style={{ width: "100%" }}>
           <TextField.Root style={{ width: "100%" }}>
             <TextField.Slot>
@@ -54,14 +53,11 @@ export default function Welcome() {
             />
           </TextField.Root>
           <Button onClick={() => handleSignIn()} disabled={loading}>
-            {loading ? "..." : "Let's go"}
+            {loading ? "..." : "Connect"}
           </Button>
         </Flex>
 
-        <Button
-          variant="ghost"
-          onClick={() => setPage(PopupScreens.UserCreate)}
-        >
+        <Button variant="ghost" onClick={() => setCreateScreen(true)}>
           Dont have nsec, create one
         </Button>
       </Flex>

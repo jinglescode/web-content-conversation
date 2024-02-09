@@ -1,10 +1,5 @@
-import UI from "~ui/common/UI"
-import UiContent from "~ui/content"
+import Hero from "./Hero";
 
 export default function UiLanding() {
-  return (
-    <UI>
-      <UiContent />
-    </UI>
-  )
+  return <Hero />;
 }

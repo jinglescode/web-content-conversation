@@ -1,8 +1,8 @@
 {
-  "name": "web-content-conversation",
-  "displayName": "Web Content Conversation",
-  "version": "0.0.6",
-  "description": "Enabling collaborative knowledge sharing by integrating web content and online discussions, transforming the way we engage with information on the web.",
+  "name": "satcom",
+  "displayName": "Satcom - Collaborative layer to your Internet",
+  "version": "0.0.8",
+  "description": "Adding collaborative layer to your Internet browsing experience.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
     "start": "next start",
@@ -12,6 +12,7 @@
     "build:next": "next build"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
     "@nostr-dev-kit/ndk": "^2.3.3",
     "@plasmohq/messaging": "^0.6.1",
     "@plasmohq/storage": "^1.9.0",
@@ -21,7 +22,7 @@
     "lodash": "^4.17.21",
     "next": "14.0.2",
     "nostr-tools": "^2.1.4",
-    "plasmo": "0.84.1",
+    "plasmo": "0.84.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-string-replace": "^1.1.1",

@@ -15,7 +15,11 @@ import { useNostr } from "~lib/nostr/NostrProvider";
 import { usePopupStore } from "~lib/zustand/popup";
 import { PopupScreens } from "~types/app/PopupScreens";
 
-export default function UserCreate() {
+export default function UserCreate({
+  setCreateScreen,
+}: {
+  setCreateScreen: (val: boolean) => void;
+}) {
   const setPage = usePopupStore((state) => state.setPage);
   const [loading, setLoading] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
@@ -30,14 +34,9 @@ export default function UserCreate() {
   return (
     <Box p="4">
       <Flex direction="column" align="center" gap="4">
-        <Avatar
-          size="9"
-          src={chrome.runtime.getURL("assets/icon.svg")}
-          radius="full"
-          fallback=""
-        />
         <Heading size="7">Create User</Heading>
         <Text align="center">What's your name / nickname?</Text>
+
         <Flex gap="1" style={{ width: "100%" }}>
           <TextField.Root style={{ width: "100%" }}>
             <TextField.Slot>
@@ -55,7 +54,7 @@ export default function UserCreate() {
           </Button>
         </Flex>
 
-        <Button variant="ghost" onClick={() => setPage(PopupScreens.Welcome)}>
+        <Button variant="ghost" onClick={() => setCreateScreen(false)}>
           Log in with nsec instead
         </Button>
       </Flex>

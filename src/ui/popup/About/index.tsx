@@ -1,5 +1,13 @@
 import { GitHubLogoIcon, LightningBoltIcon } from "@radix-ui/react-icons";
-import { Flex, Avatar, Heading, Text, Link } from "@radix-ui/themes";
+import {
+  Flex,
+  Avatar,
+  Heading,
+  Text,
+  Link,
+  Grid,
+  Separator,
+} from "@radix-ui/themes";
 import { APP_DESC, APP_NAME, DONATE_URL, GITHUB_URL } from "~constants/global";
 
 export default function About() {
@@ -14,14 +22,23 @@ export default function About() {
       />
       <Heading size="7">{APP_NAME}</Heading>
       <Text align="center">{APP_DESC}</Text>
-      <Flex gap="2">
+
+      <Separator my="4" size="4" />
+
+      <Grid columns="2" gap="4" width="auto">
         <Link href={GITHUB_URL} target="_blank" rel="noreferrer">
-          <GitHubLogoIcon height="24" width="24" />
+          <Flex gap="2" direction="column" align="center">
+            <GitHubLogoIcon height="24" width="24" />
+            <Text>GitHub</Text>
+          </Flex>
         </Link>
         <Link href={DONATE_URL} target="_blank" rel="noreferrer">
-          <LightningBoltIcon height="24" width="24" />
+          <Flex gap="2" direction="column" align="center">
+            <LightningBoltIcon height="24" width="24" />
+            <Text>Support</Text>
+          </Flex>
         </Link>
-      </Flex>
+      </Grid>
     </Flex>
   );
 }
