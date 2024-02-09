@@ -3,6 +3,7 @@ export type Settings = {
     iconDisplay: boolean;
     iconPlacement: string;
     windowSize: string;
+    iconOffset: number;
   };
   nostr: {
     relays: string[];

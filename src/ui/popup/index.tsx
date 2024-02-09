@@ -6,15 +6,12 @@ import { Storage } from "@plasmohq/storage";
 import { POPUP_HEIGHT } from "~constants/popup";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { usePopupStore } from "~lib/zustand/popup";
-import { PopupScreens } from "~types/app/PopupScreens";
 import { type Settings } from "~types/Settings";
 import UI from "~ui/common/UI";
 
 import Appearance from "./Appearance";
 import Account from "./Account";
 import Posts from "./Posts";
-import UserCreate from "./UserCreate";
-import Welcome from "./Welcome";
 import { DEFAULT_SETTINGS } from "~constants/settings";
 import { merge } from "lodash";
 import About from "./About";
@@ -29,17 +26,15 @@ export default function UiPopup() {
           <div style={{ height: POPUP_HEIGHT }}>
             <About />
           </div>
-        ) : user ? (
-          <IsLoggedIn />
         ) : (
-          <NotLoggedIn />
+          <Loaded />
         )}
       </UI>
     </div>
   );
 }
 
-function IsLoggedIn() {
+function Loaded() {
   const setSettings = usePopupStore((state) => state.setSettings);
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -61,12 +56,12 @@ function IsLoggedIn() {
   if (!loaded) return <></>;
 
   return (
-    <Tabs.Root defaultValue="appearance">
+    <Tabs.Root defaultValue="about">
       <Tabs.List>
-        <Tabs.Trigger value="appearance">Appearance</Tabs.Trigger>
-        <Tabs.Trigger value="account">Account</Tabs.Trigger>
-        <Tabs.Trigger value="posts">Posts</Tabs.Trigger>
         <Tabs.Trigger value="about">About</Tabs.Trigger>
+        <Tabs.Trigger value="account">Account</Tabs.Trigger>
+        <Tabs.Trigger value="appearance">Appearance</Tabs.Trigger>
+        <Tabs.Trigger value="posts">Posts</Tabs.Trigger>
       </Tabs.List>
 
       <ScrollArea
@@ -90,21 +85,5 @@ function IsLoggedIn() {
         </Box>
       </ScrollArea>
     </Tabs.Root>
-  );
-}
-
-function NotLoggedIn() {
-  const page = usePopupStore((state) => state.page);
-  const setPage = usePopupStore((state) => state.setPage);
-
-  useEffect(() => {
-    setPage(PopupScreens.Welcome);
-  }, []);
-
-  return (
-    <>
-      {page === PopupScreens.Welcome && <Welcome />}
-      {page === PopupScreens.UserCreate && <UserCreate />}
-    </>
   );
 }

@@ -6,6 +6,7 @@ export const DEFAULT_SETTINGS: Settings = {
     iconDisplay: true,
     iconPlacement: "bottom",
     windowSize: "large",
+    iconOffset: 0,
   },
   nostr: {
     relays: EXPLICIT_RELAY_URLS,

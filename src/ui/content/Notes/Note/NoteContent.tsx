@@ -1,5 +1,5 @@
 import type { NDKEvent } from "@nostr-dev-kit/ndk";
-import { Text } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { useMemo, type ReactNode } from "react";
 import { stripHtml } from "string-strip-html";
 import { NOSTR_MENTIONS, NOSTR_EVENTS } from "~constants/nostr";
@@ -176,20 +176,20 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
 
       if (mentions.length) {
         for (const mention of mentions) {
+          console.log(3, mention);
           parsedContent = reactStringReplace(
             parsedContent,
             mention,
             (match, i) => (
               <NoteLink key={nanoid()} url={`https://njump.me/${mention}`}>
-                {settings.notes.nostrIcons ? (
+                <Flex justify="center" align="center" gap="1">
                   <PersonIcon
-                    width="16"
-                    height="16"
+                    width="12"
+                    height="12"
                     style={{ display: "inline-block" }}
                   />
-                ) : (
-                  mention
-                )}
+                  <UserName pubkey={cleanMentionToPubkey(mention)} />
+                </Flex>
               </NoteLink>
             )
           );
@@ -238,4 +238,20 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
       {richContent}
     </Text>
   );
+}
+
+import { nip19, generateSecretKey, getPublicKey } from "nostr-tools";
+import UserName from "~ui/common/UserName";
+
+function cleanMentionToPubkey(str: string): string {
+  if (str.includes("@")) {
+    str = str.replace("@", "");
+  }
+  if (str.includes(":")) {
+    str = str.split(":")[1];
+  }
+
+  let { type, data } = nip19.decode(str);
+
+  return data.toString();
 }

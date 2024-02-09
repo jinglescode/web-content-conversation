@@ -16,6 +16,7 @@ export default function NoteLink({
         overflowWrap: "anywhere",
         whiteSpace: "pre-line",
         wordBreak: "break-all",
+        display: "inline-flex",
       }}
     >
       {children}

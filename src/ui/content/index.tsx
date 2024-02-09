@@ -68,12 +68,12 @@ export default function UiContent() {
           settings.appearance.iconPlacement === "top"
             ? {
                 position: "fixed",
-                top: 0,
+                top: settings.appearance.iconOffset,
                 right: 0,
               }
             : {
                 position: "fixed",
-                bottom: 0,
+                bottom: settings.appearance.iconOffset,
                 right: 0,
               }
         }
