@@ -1,8 +1,8 @@
-import "@radix-ui/themes/styles.css"
-import "styles.css"
+import "@radix-ui/themes/styles.css";
+import "styles.css";
 
-import UiPopup from "~ui/popup"
+import UiPopup from "~ui/popup";
 
 export default function IndexPopup() {
-  return <UiPopup />
+  return <UiPopup />;
 }

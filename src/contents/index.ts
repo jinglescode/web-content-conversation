@@ -13,6 +13,7 @@ relay(
     name: "tabs/query-active" as const,
   },
   async (req) => {
+    //@ts-ignore
     return await sendToBackground(req);
   }
 );
@@ -22,6 +23,7 @@ relay(
     name: "storage/set-user" as const,
   },
   async (req) => {
+    //@ts-ignore
     return await sendToBackground(req);
   }
 );
@@ -31,6 +33,7 @@ relay(
     name: "storage/get-user" as const,
   },
   async (req) => {
+    //@ts-ignore
     return await sendToBackground(req);
   }
 );
@@ -40,6 +43,7 @@ relay(
     name: "storage/set-settings" as const,
   },
   async (req) => {
+    //@ts-ignore
     return await sendToBackground(req);
   }
 );
@@ -49,6 +53,7 @@ relay(
     name: "storage/get-settings" as const,
   },
   async (req) => {
+    //@ts-ignore
     return await sendToBackground(req);
   }
 );
