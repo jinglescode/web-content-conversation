@@ -25,8 +25,10 @@ export default function UiContent() {
 
   useEffect(() => {
     async function getOnloadTab() {
+      //@ts-ignore
       const tab = await messageBackgroundRelay("tabs/query-active");
       handlePageUpdate(tab.title, tab.url, window.location.hostname);
+      //@ts-ignore
       let settings = await messageBackgroundRelay("storage/get-settings");
       if (settings === undefined) {
         settings = DEFAULT_SETTINGS;
