@@ -1,3 +1,4 @@
+import { HomeIcon, HomeModernIcon } from "@heroicons/react/24/outline";
 import { GitHubLogoIcon, LightningBoltIcon } from "@radix-ui/react-icons";
 import {
   Flex,
@@ -8,7 +9,13 @@ import {
   Grid,
   Separator,
 } from "@radix-ui/themes";
-import { APP_DESC, APP_NAME, DONATE_URL, GITHUB_URL } from "~constants/global";
+import {
+  APP_DESC,
+  APP_NAME,
+  DONATE_URL,
+  GITHUB_URL,
+  HOMEPAGE_URL,
+} from "~constants/global";
 
 export default function About() {
   return (
@@ -25,7 +32,13 @@ export default function About() {
 
       <Separator my="4" size="4" />
 
-      <Grid columns="2" gap="4" width="auto">
+      <Grid columns="3" gap="4" width="auto">
+        <Link href={HOMEPAGE_URL} target="_blank" rel="noreferrer">
+          <Flex gap="2" direction="column" align="center">
+            <HomeIcon height="24" width="24" />
+            <Text>satcom.app</Text>
+          </Flex>
+        </Link>
         <Link href={GITHUB_URL} target="_blank" rel="noreferrer">
           <Flex gap="2" direction="column" align="center">
             <GitHubLogoIcon height="24" width="24" />

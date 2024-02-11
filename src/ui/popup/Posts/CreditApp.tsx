@@ -5,20 +5,20 @@ import { usePopupStore } from "~lib/zustand/popup";
 import Row from "../common/Row";
 import { HIGHLIGHT_COLOR } from "~constants/radix";
 
-export default function IconDisplay() {
+export default function CreditApp() {
   const settings = usePopupStore((state) => state.settings);
   const setSettings = usePopupStore((state) => state.setSettings);
 
   return (
-    <Row label="Show Icon">
+    <Row label="Credit satcom.app">
       <Switch
-        checked={settings.appearance.iconDisplay}
+        checked={settings.notes.credit}
         onCheckedChange={(boolean) =>
           setSettings({
             ...settings,
-            appearance: {
-              ...settings.appearance,
-              iconDisplay: boolean,
+            notes: {
+              ...settings.notes,
+              credit: boolean,
             },
           })
         }

@@ -9,6 +9,8 @@ export const STALE_TIME = 0; // 1000 * 60 * 60 * 24
 
 export const RELAY = "wss://relay.damus.io";
 
+export const NOSTR_REDIRECT_URL = "https://njump.me/";
+
 export const NOSTR_EVENTS = [
   "@nevent1",
   "@note1",

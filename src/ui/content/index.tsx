@@ -66,6 +66,7 @@ export default function UiContent() {
   return (
     <UI>
       <div
+        className="shadow-sm"
         style={
           settings.appearance.iconPlacement === "top"
             ? {

@@ -6,8 +6,9 @@ import { getShortenUrl } from "~lib/w3/getShortenUrl";
 import { useAppStore } from "~lib/zustand/app";
 import { AppScreens } from "~types/app/AppScreens";
 
-import NoteTextarea from "../../common/NoteTextarea";
+import NoteTextarea from "./NoteTextarea";
 import { useNostrStore } from "~lib/zustand/nostr";
+import { APP_CREDIT } from "~constants/global";
 
 export default function NewNote() {
   const setPage = useAppStore((state) => state.setPage);
@@ -24,6 +25,9 @@ export default function NewNote() {
     if (user && userInput && userInput.length > 0) {
       setLoading(true);
 
+      let noteContent = userInput;
+
+      // attached page URL
       let noteUrl = pageUrl;
       if (settings.notes.shorten) {
         const shortenUrl = await getShortenUrl(pageUrl);
@@ -31,9 +35,15 @@ export default function NewNote() {
           noteUrl = `https://${shortenUrl.url}`;
         }
       }
+      noteContent += `\n\n${noteUrl}`;
+
+      // attached app credit if enabled
+      if (settings.notes.credit) {
+        noteContent += `\n\n${APP_CREDIT}`;
+      }
 
       let _event = new NDKEvent();
-      _event.content = `${userInput}\n\n${noteUrl}`;
+      _event.content = noteContent;
       _event.kind = 1;
       _event.tags = [
         ["r", pageUrl, "page"],

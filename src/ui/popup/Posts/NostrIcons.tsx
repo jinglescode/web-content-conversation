@@ -3,6 +3,7 @@ import { Switch } from "@radix-ui/themes";
 import { usePopupStore } from "~lib/zustand/popup";
 
 import Row from "../common/Row";
+import { HIGHLIGHT_COLOR } from "~constants/radix";
 
 export default function NostrIcons() {
   const settings = usePopupStore((state) => state.settings);
@@ -21,6 +22,7 @@ export default function NostrIcons() {
             },
           })
         }
+        color={HIGHLIGHT_COLOR}
       />
     </Row>
   );

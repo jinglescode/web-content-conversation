@@ -1,15 +1,16 @@
-import { Switch } from "@radix-ui/themes"
+import { Switch } from "@radix-ui/themes";
 
-import { usePopupStore } from "~lib/zustand/popup"
+import { usePopupStore } from "~lib/zustand/popup";
 
-import Row from "../common/Row"
+import Row from "../common/Row";
+import { HIGHLIGHT_COLOR } from "~constants/radix";
 
 export default function ShortenUrl() {
-  const settings = usePopupStore((state) => state.settings)
-  const setSettings = usePopupStore((state) => state.setSettings)
+  const settings = usePopupStore((state) => state.settings);
+  const setSettings = usePopupStore((state) => state.setSettings);
 
   return (
-    <Row label="Shorten URL">
+    <Row label="Shorten page URL">
       <Switch
         checked={settings.notes.shorten}
         onCheckedChange={(boolean) =>
@@ -17,11 +18,12 @@ export default function ShortenUrl() {
             ...settings,
             notes: {
               ...settings.notes,
-              shorten: boolean
-            }
+              shorten: boolean,
+            },
           })
         }
+        color={HIGHLIGHT_COLOR}
       />
     </Row>
-  )
+  );
 }
