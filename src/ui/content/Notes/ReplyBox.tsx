@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { RELAY } from "~constants/nostr";
 import { useNotesMutation } from "~lib/nostr/useNotesMutation";
 import { useAppStore } from "~lib/zustand/app";
-import NoteTextarea from "~ui/common/NoteTextarea";
+import NoteTextarea from "~ui/content/Notes/NoteTextarea";
 
 export default function ReplyBox({
   event,

@@ -24,7 +24,12 @@ export default function TopBar() {
       }}
     >
       <Box>
-        <Text as="div" size="2" weight="bold">
+        <Text
+          as="div"
+          size="2"
+          weight="bold"
+          className="text-ellipsis overflow-hidden h-10"
+        >
           {page == AppScreens.Feed && (
             <>
               {notesView == NotesView.Page

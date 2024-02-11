@@ -1,7 +1,7 @@
 {
   "name": "satcom",
   "displayName": "Satcom - Collaborative layer to your Internet",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Adding collaborative layer to your Internet browsing experience.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
@@ -12,6 +12,7 @@
     "build:next": "next build"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@nostr-dev-kit/ndk": "^2.3.3",
     "@plasmohq/messaging": "^0.6.1",

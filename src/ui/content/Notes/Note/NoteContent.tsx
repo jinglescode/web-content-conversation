@@ -2,7 +2,11 @@ import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import { Flex, Text } from "@radix-ui/themes";
 import { useMemo, type ReactNode } from "react";
 import { stripHtml } from "string-strip-html";
-import { NOSTR_MENTIONS, NOSTR_EVENTS } from "~constants/nostr";
+import {
+  NOSTR_MENTIONS,
+  NOSTR_EVENTS,
+  NOSTR_REDIRECT_URL,
+} from "~constants/nostr";
 import { IMAGES, AUDIOS, VIDEOS } from "~constants/files";
 import reactStringReplace from "react-string-replace";
 import { nanoid } from "nanoid";
@@ -10,6 +14,9 @@ import NoteLink from "./NoteLink";
 import { useAppStore } from "~lib/zustand/app";
 import { FileIcon, PersonIcon } from "@radix-ui/react-icons";
 import NoteImage from "./NoteImage";
+import { nip19 } from "nostr-tools";
+import UserName from "~ui/common/UserName";
+import { APP_CREDIT } from "~constants/global";
 
 export default function NoteContent({ event }: { event: NDKEvent }) {
   const pageUrl = useAppStore((state) => state.pageUrl);
@@ -19,20 +26,31 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
     return content.lastIndexOf(char);
   }
 
-  function removeW3LinkLastLine(content: string) {
-    // remove shorten url attached by app
+  function removeLinkLastLine(content: string) {
+    // remove credit attached by app if present
+    content = content.replace(`\n\n${APP_CREDIT}`, "");
+
     const lastDoubleNewLine = getLastIndexOfChar(content, "\n\n");
-    const lastHttp = getLastIndexOfChar(content, "https://w3.do/");
-    if (lastDoubleNewLine > 0 && lastHttp - lastDoubleNewLine == 2) {
+
+    // remove shorten url attached by app
+    const lastLineIsW3 = getLastIndexOfChar(content, "https://w3.do/");
+    if (lastDoubleNewLine > 0 && lastLineIsW3 - lastDoubleNewLine == 2) {
       return content.substring(0, lastDoubleNewLine);
     }
+
+    // remove url of this page attached by app
+    const lastLineIsUrl = getLastIndexOfChar(content, pageUrl);
+    if (lastDoubleNewLine > 0 && lastLineIsUrl - lastDoubleNewLine == 2) {
+      return content.substring(0, lastDoubleNewLine);
+    }
+
     return content;
   }
 
   function removePageUrl(content: string) {
     // todo: how to make it more fuzzy search?
-    content = removeW3LinkLastLine(content);
-    return content.replace(pageUrl, "");
+    content = removeLinkLastLine(content);
+    return content;
   }
 
   const richContent = useMemo(() => {
@@ -158,7 +176,7 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
             parsedContent,
             event,
             (match, i) => (
-              <NoteLink key={nanoid()} url={`https://njump.me/${event}`}>
+              <NoteLink key={nanoid()} url={`${NOSTR_REDIRECT_URL}${event}`}>
                 {settings.notes.nostrIcons ? (
                   <FileIcon
                     width="16"
@@ -176,12 +194,11 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
 
       if (mentions.length) {
         for (const mention of mentions) {
-          console.log(3, mention);
           parsedContent = reactStringReplace(
             parsedContent,
             mention,
             (match, i) => (
-              <NoteLink key={nanoid()} url={`https://njump.me/${mention}`}>
+              <NoteLink key={nanoid()} url={`${NOSTR_REDIRECT_URL}${mention}`}>
                 <Flex justify="center" align="center" gap="1">
                   <PersonIcon
                     width="12"
@@ -239,9 +256,6 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
     </Text>
   );
 }
-
-import { nip19, generateSecretKey, getPublicKey } from "nostr-tools";
-import UserName from "~ui/common/UserName";
 
 function cleanMentionToPubkey(str: string): string {
   if (str.includes("@")) {

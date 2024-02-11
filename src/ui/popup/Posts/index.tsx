@@ -1,7 +1,7 @@
 import { Table } from "@radix-ui/themes";
 
 import ShortenUrl from "./ShortenUrl";
-import NostrIcons from "./NostrIcons";
+import CreditApp from "./CreditApp";
 // import SortBy from "./SortBy";
 
 export default function Posts() {
@@ -9,10 +9,10 @@ export default function Posts() {
     <Table.Root>
       <Table.Body style={{ verticalAlign: "middle" }}>
         <ShortenUrl />
-        <NostrIcons />
-        {/* <SortBy /> */}{" "}
+        <CreditApp />
+        {/* <NostrIcons /> */}
+        {/* <SortBy /> */}
         {/* todo: future, until we can get reaction counts into an object */}
-        {/* todo: future, add credit after we got name and maybe website */}
       </Table.Body>
     </Table.Root>
   );

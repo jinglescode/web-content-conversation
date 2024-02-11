@@ -8,7 +8,7 @@ export default function IconOffset() {
   const setSettings = usePopupStore((state) => state.setSettings);
 
   return (
-    <Row label="Icon Offset">
+    <Row label="Icon Offset From Edge">
       <TextField.Input
         type="number"
         value={settings.appearance.iconOffset}

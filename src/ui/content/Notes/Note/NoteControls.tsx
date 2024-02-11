@@ -1,7 +1,7 @@
 import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import {
-  CaretDownIcon,
-  CaretUpIcon,
+  ChatBubbleIcon,
+  Share2Icon,
   ThickArrowDownIcon,
   ThickArrowUpIcon,
 } from "@radix-ui/react-icons";
@@ -14,6 +14,8 @@ import { useNotesReactionsMutation } from "~lib/nostr/useNotesReactionsMutation"
 import { useNostrStore } from "~lib/zustand/nostr";
 
 import ReplyBox from "../ReplyBox";
+import Link from "~ui/common/Link";
+import { NOSTR_REDIRECT_URL } from "~constants/nostr";
 
 export default function NoteControls({
   showControls,
@@ -70,7 +72,7 @@ export default function NoteControls({
 
   function getReactionCount(reaction: string) {
     if (reactions[reaction] && reactions[reaction].count) {
-      return reactions[reaction].count;
+      return parseInt(reactions[reaction].count);
     }
     return 0;
   }
@@ -78,7 +80,7 @@ export default function NoteControls({
   return (
     showControls && (
       <>
-        <Flex gap="4">
+        <Flex gap="6">
           {reactions && (
             <>
               <Button
@@ -90,7 +92,7 @@ export default function NoteControls({
                 disabled={loading}
               >
                 <ThickArrowUpIcon width="16" height="16" />
-                {getReactionCount("+")}
+                {getReactionCount("+") > 0 && getReactionCount("+")}
               </Button>
               <Button
                 variant="ghost"
@@ -101,7 +103,7 @@ export default function NoteControls({
                 disabled={loading}
               >
                 <ThickArrowDownIcon width="16" height="16" />
-                {getReactionCount("-")}
+                {getReactionCount("-") > 0 && getReactionCount("-")}
               </Button>
             </>
           )}
@@ -109,31 +111,19 @@ export default function NoteControls({
             <Button
               variant="ghost"
               onClick={() => {
-                if (replies.length) setShowReplies(!showReplies);
+                setShowReplies(!showReplies);
               }}
               color={showReplies ? HIGHLIGHT_COLOR : ACCENT_COLOR}
             >
-              {showReplies ? (
-                <CaretUpIcon width="16" height="16" />
-              ) : (
-                <CaretDownIcon width="16" height="16" />
-              )}
-              {replies.length} replies
+              <ChatBubbleIcon width="16" height="16" />
+              {replies.length > 0 && replies.length}
             </Button>
           )}
-          {user && (
-            <>
-              <Button
-                variant="ghost"
-                onClick={() => setShowReplySection(!showReplySection)}
-                color={showReplySection ? HIGHLIGHT_COLOR : ACCENT_COLOR}
-              >
-                Reply
-              </Button>
-            </>
-          )}
+          <Link href={`${NOSTR_REDIRECT_URL}${event.id}`}>
+            <Share2Icon width="16" height="16" />
+          </Link>
         </Flex>
-        {showReplySection && (
+        {showReplies && user && (
           <ReplyBox event={event} setShowReplySection={setShowReplySection} />
         )}
       </>
