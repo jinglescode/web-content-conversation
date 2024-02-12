@@ -22,13 +22,14 @@ export default function UiPopup() {
   return (
     <div className="popup_container">
       <UI>
-        {user === undefined ? (
+        {/* {user === undefined ? (
           <div style={{ height: POPUP_HEIGHT }}>
             <About />
           </div>
         ) : (
           <Loaded />
-        )}
+        )} */}
+        <Loaded />
       </UI>
     </div>
   );

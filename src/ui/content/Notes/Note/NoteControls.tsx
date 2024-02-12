@@ -14,8 +14,8 @@ import { useNotesReactionsMutation } from "~lib/nostr/useNotesReactionsMutation"
 import { useNostrStore } from "~lib/zustand/nostr";
 
 import ReplyBox from "../ReplyBox";
-import Link from "~ui/common/Link";
 import { NOSTR_REDIRECT_URL } from "~constants/nostr";
+import { useAppStore } from "~lib/zustand/app";
 
 export default function NoteControls({
   showControls,
@@ -31,12 +31,11 @@ export default function NoteControls({
   setShowReplies: (boolean) => void;
 }) {
   const user = useNostrStore((state) => state.user);
-  // const setToast = useAppStore((state) => state.setToast)
   const { data: reactions } = useNotesReactions({ eventId: event.id });
   const { mutate: mutateReaction, isSuccess: reactionMutateSuccess } =
     useNotesReactionsMutation();
   const [loading, setLoading] = useState<boolean>(false);
-  const [showReplySection, setShowReplySection] = useState<boolean>(false);
+  const setToast = useAppStore((state) => state.setToast);
 
   async function reactToNote(reaction: string) {
     if (user) {
@@ -55,7 +54,7 @@ export default function NoteControls({
   useEffect(() => {
     if (reactionMutateSuccess) {
       setLoading(false);
-      // setToast("You have reacted to this post")
+      setToast("Reacted!");
     }
   }, [reactionMutateSuccess]);
 
@@ -90,8 +89,9 @@ export default function NoteControls({
                 }
                 onClick={() => reactToNote("+")}
                 disabled={loading}
+                className="h-5 w-auto"
               >
-                <ThickArrowUpIcon width="16" height="16" />
+                <ThickArrowUpIcon width="14" height="14" />
                 {getReactionCount("+") > 0 && getReactionCount("+")}
               </Button>
               <Button
@@ -101,8 +101,9 @@ export default function NoteControls({
                 }
                 onClick={() => reactToNote("-")}
                 disabled={loading}
+                className="h-5 w-auto"
               >
-                <ThickArrowDownIcon width="16" height="16" />
+                <ThickArrowDownIcon width="14" height="14" />
                 {getReactionCount("-") > 0 && getReactionCount("-")}
               </Button>
             </>
@@ -114,18 +115,23 @@ export default function NoteControls({
                 setShowReplies(!showReplies);
               }}
               color={showReplies ? HIGHLIGHT_COLOR : ACCENT_COLOR}
+              className="h-5 w-auto"
             >
-              <ChatBubbleIcon width="16" height="16" />
+              <ChatBubbleIcon width="14" height="14" />
               {replies.length > 0 && replies.length}
             </Button>
           )}
-          <Link href={`${NOSTR_REDIRECT_URL}${event.id}`}>
-            <Share2Icon width="16" height="16" />
-          </Link>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              window.location.href = `${NOSTR_REDIRECT_URL}${event.id}`;
+            }}
+            className="h-5 w-auto"
+          >
+            <Share2Icon width="14" height="14" />
+          </Button>
         </Flex>
-        {showReplies && user && (
-          <ReplyBox event={event} setShowReplySection={setShowReplySection} />
-        )}
+        {showReplies && user && <ReplyBox event={event} />}
       </>
     )
   );

@@ -6,17 +6,12 @@ import { useNotesMutation } from "~lib/nostr/useNotesMutation";
 import { useAppStore } from "~lib/zustand/app";
 import NoteTextarea from "~ui/content/Notes/NoteTextarea";
 
-export default function ReplyBox({
-  event,
-  setShowReplySection,
-}: {
-  event: NDKEvent;
-  setShowReplySection: (boolean) => void;
-}) {
+export default function ReplyBox({ event }: { event: NDKEvent }) {
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const pageUrl = useAppStore((state) => state.pageUrl);
   const { mutate, isSuccess } = useNotesMutation();
+  const setToast = useAppStore((state) => state.setToast);
 
   async function publishNote() {
     if (userInput && userInput.length > 0) {
@@ -32,8 +27,8 @@ export default function ReplyBox({
   useEffect(() => {
     if (isSuccess) {
       setUserInput("");
-      setShowReplySection(false);
       setLoading(false);
+      setToast("Reply published!");
     }
   }, [isSuccess]);
 

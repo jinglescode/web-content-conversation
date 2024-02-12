@@ -44,6 +44,7 @@ export default function DisplayName() {
           placeholder="Your display name"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
+          style={{ marginRight: "4px" }}
         />
         <Button
           onClick={() => updateName()}

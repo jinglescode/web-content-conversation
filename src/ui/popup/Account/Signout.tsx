@@ -13,7 +13,7 @@ export default function Signout() {
   async function signout() {
     const storage = new Storage()
     storage.clear()
-    setUser(null)
+    setUser(undefined)
   }
 
   return (

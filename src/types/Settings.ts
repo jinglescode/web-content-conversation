@@ -4,6 +4,7 @@ export type Settings = {
     iconPlacement: string;
     windowSize: string;
     iconOffset: number;
+    windowTransparency: boolean;
   };
   nostr: {
     relays: string[];

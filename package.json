@@ -1,7 +1,7 @@
 {
   "name": "satcom",
   "displayName": "Satcom - Collaborative layer to your Internet",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Adding collaborative layer to your Internet browsing experience.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
@@ -9,7 +9,8 @@
     "dev:plasmo": "plasmo dev",
     "dev:next": "next dev",
     "build:plasmo": "plasmo build",
-    "build:next": "next build"
+    "build:next": "next build",
+    "build:firefox": "plasmo build --target=firefox-mv2"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",

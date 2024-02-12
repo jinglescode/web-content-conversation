@@ -8,6 +8,7 @@ import { EXPLICIT_RELAY_URLS } from "~constants/nostr";
 
 export default class NostrClass {
   ndk: NDK;
+  signer: NDKPrivateKeySigner;
 
   constructor({}: {}) {}
 
@@ -19,6 +20,7 @@ export default class NostrClass {
       });
       await ndk.connect();
       this.ndk = ndk;
+      if (signer) this.signer = signer;
     } catch (e) {
       console.error(`[NostrClass] init ${e}`);
     }

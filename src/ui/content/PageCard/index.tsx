@@ -14,6 +14,7 @@ import { NotesView } from "~types/app/NotesView";
 export default function PageCard() {
   const page = useAppStore((state) => state.page);
   const pageUrl = useAppStore((state) => state.pageUrl);
+  const settings = useAppStore((state) => state.settings);
   const domain = useAppStore((state) => state.domain);
   const setPage = useAppStore((state) => state.setPage);
   const notesView = useAppStore((state) => state.notesView);
@@ -47,7 +48,9 @@ export default function PageCard() {
       style={{
         margin: "4px",
         width: "400px",
-        backgroundColor: "rgba(40, 40, 43, 0.90)",
+        backgroundColor: `rgba(40, 40, 43, ${
+          settings.appearance.windowTransparency ? "0.9" : "1"
+        })`,
       }}
     >
       <Inset clip="padding-box" side="top" pb="current">

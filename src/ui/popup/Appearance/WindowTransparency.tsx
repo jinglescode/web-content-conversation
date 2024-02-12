@@ -5,20 +5,20 @@ import { usePopupStore } from "~lib/zustand/popup";
 import Row from "../common/Row";
 import { HIGHLIGHT_COLOR } from "~constants/radix";
 
-export default function ShortenUrl() {
+export default function WindowTransparency() {
   const settings = usePopupStore((state) => state.settings);
   const setSettings = usePopupStore((state) => state.setSettings);
 
   return (
-    <Row label="Shorten Page URL">
+    <Row label="Window Transparency">
       <Switch
-        checked={settings.notes.shorten}
+        checked={settings.appearance.windowTransparency}
         onCheckedChange={(boolean) =>
           setSettings({
             ...settings,
-            notes: {
-              ...settings.notes,
-              shorten: boolean,
+            appearance: {
+              ...settings.appearance,
+              windowTransparency: boolean,
             },
           })
         }
