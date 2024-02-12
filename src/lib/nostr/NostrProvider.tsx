@@ -90,6 +90,8 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
 
       //@ts-ignore
       await messageBackground("storage/set-user", user);
+    } else {
+      setUser(undefined);
     }
   }
 
@@ -103,8 +105,10 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
           const privkey = nip19.decode(_user.nsec).data as string;
           const signer = new NDKPrivateKeySigner(privkey);
           await _nostr.init(signer);
+          setUser(_user);
+        } else {
+          setUser(undefined);
         }
-        setUser(_user);
       } catch (e) {
         console.error(`[NostrProvider] load - ${e}`);
       }

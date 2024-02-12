@@ -4,6 +4,7 @@ import IconDisplay from "./IconDisplay";
 import IconPlacement from "./IconPlacement";
 import WindowSize from "./WindowSize";
 import IconOffset from "./IconOffset";
+import WindowTransparency from "./WindowTransparency";
 
 export default function Appearance() {
   return (
@@ -13,6 +14,7 @@ export default function Appearance() {
         <IconPlacement />
         <IconOffset />
         <WindowSize />
+        <WindowTransparency />
       </Table.Body>
     </Table.Root>
   );

@@ -8,6 +8,6 @@ interface NostrState {
 }
 
 export const useNostrStore = create<NostrState>()((set, get) => ({
-  user: undefined,
+  user: null,
   setUser: (user: UserIdentifier | undefined) => set({ user: user })
 }))

@@ -21,6 +21,7 @@ export default function IconOffset() {
             },
           })
         }
+        style={{ marginRight: "4px" }}
       />
     </Row>
   );

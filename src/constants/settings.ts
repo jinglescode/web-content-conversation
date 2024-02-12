@@ -7,6 +7,7 @@ export const DEFAULT_SETTINGS: Settings = {
     iconPlacement: "bottom",
     windowSize: "large",
     iconOffset: 0,
+    windowTransparency: true,
   },
   nostr: {
     relays: EXPLICIT_RELAY_URLS,

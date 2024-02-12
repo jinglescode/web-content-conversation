@@ -47,6 +47,7 @@ export default function UserCreate({
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               disabled={loading}
+              style={{ marginRight: "4px" }}
             />
           </TextField.Root>
           <Button onClick={() => createUser()} disabled={loading}>

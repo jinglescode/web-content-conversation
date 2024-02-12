@@ -50,6 +50,7 @@ export default function Welcome({
               type="password"
               value={nsec}
               onChange={(e) => setNsec(e.target.value)}
+              style={{ marginRight: "4px" }}
             />
           </TextField.Root>
           <Button onClick={() => handleSignIn()} disabled={loading}>

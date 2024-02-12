@@ -8,6 +8,7 @@ import Drawer from "~ui/content/Drawer";
 import PageCard from "~ui/content/PageCard";
 import { merge } from "lodash";
 import { DEFAULT_SETTINGS } from "~constants/settings";
+import { NostrProvider } from "~lib/nostr/NostrProvider";
 
 export default function UiContent() {
   const setPageTitle = useAppStore((state) => state.setPageTitle);
@@ -38,6 +39,7 @@ export default function UiContent() {
       setSettings(settings);
       setLoaded(true);
     }
+    console.log(1);
     getOnloadTab();
   }, []);
 
@@ -65,26 +67,28 @@ export default function UiContent() {
 
   return (
     <UI>
-      <div
-        className="shadow-sm"
-        style={
-          settings.appearance.iconPlacement === "top"
-            ? {
-                position: "fixed",
-                top: settings.appearance.iconOffset,
-                right: 0,
-              }
-            : {
-                position: "fixed",
-                bottom: settings.appearance.iconOffset,
-                right: 0,
-              }
-        }
-      >
-        <Drawer>
-          <PageCard />
-        </Drawer>
-      </div>
+      <NostrProvider>
+        <div
+          className="shadow-sm"
+          style={
+            settings.appearance.iconPlacement === "top"
+              ? {
+                  position: "fixed",
+                  top: settings.appearance.iconOffset,
+                  right: 0,
+                }
+              : {
+                  position: "fixed",
+                  bottom: settings.appearance.iconOffset,
+                  right: 0,
+                }
+          }
+        >
+          <Drawer>
+            <PageCard />
+          </Drawer>
+        </div>
+      </NostrProvider>
     </UI>
   );
 }
