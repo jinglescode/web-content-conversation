@@ -32,6 +32,10 @@ export function useNotes({
       // get unique
       events = [...new Map(events.map((item) => [item.id, item])).values()];
 
+      // events.sort((a, b) => {
+      //   return b.created_at - a.created_at;
+      // });
+
       return events;
     },
     refetchOnWindowFocus: false,

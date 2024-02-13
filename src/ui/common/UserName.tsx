@@ -1,8 +1,8 @@
 import { Text } from "@radix-ui/themes";
 import { NOSTR_REDIRECT_URL } from "~constants/nostr";
-import { nip19 } from "nostr-tools";
 import { useUserProfile } from "~lib/nostr/useUserProfile";
 import Link from "./Link";
+import { pubkeyToNpub } from "~lib/nostr/resolvers";
 
 export default function UserName({
   pubkey,
@@ -13,7 +13,9 @@ export default function UserName({
   size?: "2" | "7";
   isLink?: boolean;
 }) {
-  let npub = nip19.npubEncode(pubkey);
+  if (pubkey == undefined) return <></>;
+  let npub = pubkeyToNpub(pubkey);
+  if (npub == undefined) return <></>;
 
   return isLink ? (
     <Link href={`${NOSTR_REDIRECT_URL}${npub}`}>
@@ -27,11 +29,9 @@ export default function UserName({
 function Name({
   pubkey,
   size = "2",
-  isLink = true,
 }: {
   pubkey: string | undefined;
   size?: "2" | "7";
-  isLink?: boolean;
 }) {
   const { data: profile } = useUserProfile(pubkey);
   return (
