@@ -10,7 +10,10 @@ import {
 
 import { messageBackground } from "~lib/chrome";
 import { useNostrStore } from "~lib/zustand/nostr";
-import type { UserIdentifier } from "~types/nostr/UserIdentifier";
+import {
+  UserIdentifierType,
+  type UserIdentifier,
+} from "~types/nostr/UserIdentifier";
 
 import { _createNostrKey } from "./createNostrKey";
 import { _getUserFromStorage } from "./getUserFromStorage";
@@ -50,21 +53,13 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
 
     await nostr.init(signer);
 
-    // const nostrUser = nostr.ndk.getUser({
-    //   hexpubkey: key.pk
-    // })
-
-    // nostrUser.profile = {}
-    // nostrUser.profile.name = name
-
-    // await nostrUser.publish()
-
     await nostr.updateUserName(key.pk, name);
 
     const user: UserIdentifier = {
       pubkey: key.pk,
       nsec: key.nsec,
       npub: key.npub,
+      type: UserIdentifierType.PrivateKey,
     };
     setUser(user);
 
@@ -85,6 +80,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
         pubkey: _user.pubkey,
         nsec: nsec,
         npub: _user.npub,
+        type: UserIdentifierType.PrivateKey,
       };
       setUser(user);
 
@@ -105,6 +101,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
           const privkey = nip19.decode(_user.nsec).data as string;
           const signer = new NDKPrivateKeySigner(privkey);
           await _nostr.init(signer);
+          _user.type = UserIdentifierType.PrivateKey;
           setUser(_user);
         } else {
           setUser(undefined);

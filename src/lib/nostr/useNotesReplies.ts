@@ -4,35 +4,27 @@ import { useQuery } from "@tanstack/react-query";
 import { STALE_TIME } from "~constants/nostr";
 
 import { useNostr } from "./NostrProvider";
-import { wineSearch } from "~lib/nostr.wine";
 
-export function useNotes({
+export function useNotesReplies({
   key,
+  replyToEventId,
   query = false,
 }: {
   key: string;
+  replyToEventId?: string;
   query: boolean;
 }) {
   const { nostr } = useNostr();
   const { status, data, error, isFetching } = useQuery({
     enabled: query == true && !!nostr,
-    queryKey: ["note", key],
+    queryKey: ["note", key, "replies", replyToEventId],
     queryFn: async () => {
-      // get by "r" tags
       let filter: NDKFilter = {
         kinds: [1],
-        "#r": [key],
+        ["#e"]: [replyToEventId],
       };
-      let events = await nostr.fetchEvents(filter);
 
-      // get notes by wine
-      let _events = await wineSearch(key);
-      events = [...events, ..._events];
-
-      // get unique
-      events = [...new Map(events.map((item) => [item.id, item])).values()];
-
-      return events;
+      return await nostr.fetchEvents(filter);
     },
     refetchOnWindowFocus: false,
     refetchOnMount: false,
