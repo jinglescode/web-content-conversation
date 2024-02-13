@@ -1,9 +1,9 @@
 import { Avatar } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
-import { nip19 } from "nostr-tools";
 import { NOSTR_REDIRECT_URL } from "~constants/nostr";
 import { useUserProfile } from "~lib/nostr/useUserProfile";
 import Link from "./Link";
+import { pubkeyToNpub } from "~lib/nostr/resolvers";
 
 export default function UserAvatar({
   pubkey,
@@ -13,11 +13,11 @@ export default function UserAvatar({
   size?: "3" | "9";
 }) {
   const queryClient = useQueryClient();
-
-  if (pubkey === undefined) return null;
-
   const { data: profile } = useUserProfile(pubkey);
-  let npub = nip19.npubEncode(pubkey);
+
+  if (pubkey == undefined) return <></>;
+  let npub = pubkeyToNpub(pubkey);
+  if (npub == undefined) return <></>;
 
   return (
     <div

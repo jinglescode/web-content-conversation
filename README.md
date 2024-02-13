@@ -4,17 +4,13 @@ Introducing a collaborative layer to internet, enhances online discussions and r
 
 By integrating web content with online discussions, it enables collaborative knowledge sharing, revolutionizing how we engage with information online.
 
+[![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/chrome-web-store.png)](https://chromewebstore.google.com/detail/satcom/lhoejonhkpkgnhaamjcplefkkomlldgi)
+
 | Explore a new dimension of interaction |   |
 |---|---|
 | ![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/screenshot-arxiv.png) | Effortlessly share ideas directly within the context of the web content you're exploring. |
 | ![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/screenshot-gemini.png) | Start a discussion on any web page, and invite others to join in. |
 | ![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/screenshot-github.png) | Pose questions directly to any projects or articles. |
-
-## Getting Started
-
-Satcom is a Chrome extension that integrates web content and online discussions. It is currently on the Chrome Web Store.
-
-[![](https://raw.githubusercontent.com/jinglescode/web-content-conversation/main/assets/chrome-web-store.png)](https://chromewebstore.google.com/detail/satcom/lhoejonhkpkgnhaamjcplefkkomlldgi)
 
 ## Developer
 

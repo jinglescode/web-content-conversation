@@ -16,7 +16,7 @@ export default function NotesList({ notes }: { notes: NDKEvent[] }) {
 
   function sortNotes(a, b) {
     // todo future features: sort by time and reactions counts
-    return 1;
+    return b.created_at - a.created_at;
   }
 
   if (notes == undefined) return <Loading />;
