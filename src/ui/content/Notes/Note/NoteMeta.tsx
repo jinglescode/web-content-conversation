@@ -5,7 +5,6 @@ import { useAppStore } from "~lib/zustand/app";
 import { NotesView } from "~types/app/NotesView";
 import UserName from "~ui/common/UserName";
 import { Link1Icon } from "@radix-ui/react-icons";
-import { NOSTR_REDIRECT_URL } from "~constants/nostr";
 import Link from "~ui/common/Link";
 
 export default function NoteMeta({ event }: { event: NDKEvent }) {
@@ -19,21 +18,22 @@ export default function NoteMeta({ event }: { event: NDKEvent }) {
     <Flex direction="column" gap="1" className="w-full">
       <Flex align="center" gap="2">
         <UserName pubkey={event.pubkey} />
-        <Link href={`${NOSTR_REDIRECT_URL}${event.id}`}>
-          <Text size="1" color="gray" className="break-normal">
-            {getDateTimeSince(event.created_at)}
-          </Text>
-        </Link>
+        <Text size="1" color="gray" className="break-normal">
+          {getDateTimeSince(event.created_at)}
+        </Text>
       </Flex>
-      {notesView == NotesView.Global && (
-        <Flex gap="1">
+      {notesView == NotesView.Global && getPageUrlFromTag() && (
+        <Flex gap="1" align="center">
           <Box>
             <Link1Icon width="16" height="16" />
           </Box>
           <Link href={getPageUrlFromTag()}>
-            <span className="text-ellipsis overflow-hidden max-h-8 text-xs">
+            <div className="text-ellipsis overflow-hidden break-all" style={{
+              fontSize: "12px",
+              maxHeight: "20px",
+            }}>
               {getPageUrlFromTag()}
-            </span>
+            </div>
           </Link>
         </Flex>
       )}

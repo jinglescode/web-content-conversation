@@ -34,14 +34,19 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
 
     // remove shorten url attached by app
     const lastLineIsW3 = getLastIndexOfChar(content, "https://w3.do/");
-    if (lastDoubleNewLine > 0 && lastLineIsW3 - lastDoubleNewLine == 2) {
+    if (lastDoubleNewLine > 0 && lastLineIsW3 - lastDoubleNewLine <= 2) {
       return content.substring(0, lastDoubleNewLine);
     }
 
     // remove url of this page attached by app
     const lastLineIsUrl = getLastIndexOfChar(content, pageUrl);
-    if (lastDoubleNewLine > 0 && lastLineIsUrl - lastDoubleNewLine == 2) {
+    if (lastDoubleNewLine > 0 && lastLineIsUrl - lastDoubleNewLine <= 2) {
       return content.substring(0, lastDoubleNewLine);
+    }
+
+    // remove if last line is pageUrl
+    if (content.endsWith(pageUrl)) {
+      return content.substring(0, content.length - pageUrl.length);
     }
 
     return content;
@@ -68,7 +73,10 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
     let events: string[] = [];
 
     const text = parsedContent;
-    const words = text.split(/( |\n)/);
+
+    // split `text` by space, breakline, comma and dot etc
+    const words = text.split(/[\s,]+/);
+
     const geturl = new RegExp(
       "((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))",
       "g"
@@ -199,13 +207,16 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
             mention,
             (match, i) => (
               <NoteLink key={nanoid()} url={`${NOSTR_REDIRECT_URL}${mention}`}>
-                <Flex justify="center" align="center" gap="1">
+                <Flex justify="center" align="center" gap="1" key={nanoid()}>
                   <PersonIcon
                     width="12"
                     height="12"
                     style={{ display: "inline-block" }}
                   />
-                  <UserName pubkey={cleanMentionToPubkey(mention)} />
+                  <UserName
+                    pubkey={cleanMentionToPubkey(mention)}
+                    isLink={false}
+                  />
                 </Flex>
               </NoteLink>
             )
@@ -247,6 +258,7 @@ export default function NoteContent({ event }: { event: NDKEvent }) {
       as="div"
       size="2"
       style={{
+        fontSize: "14px",
         overflowWrap: "anywhere",
         whiteSpace: "pre-line",
         wordBreak: "break-word",

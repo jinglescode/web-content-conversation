@@ -10,6 +10,7 @@ import NoteControls from "./NoteControls";
 import NoteMeta from "./NoteMeta";
 import Replies from "./Replies";
 import NoteContent from "./NoteContent";
+import { useNotesReplies } from "~lib/nostr/useNotesReplies";
 
 export default function Note({
   event,
@@ -25,7 +26,7 @@ export default function Note({
   const [showReplies, setShowReplies] = useState<boolean>(false);
 
   // replies
-  const { data: replies } = useNotes({
+  const { data: replies } = useNotesReplies({
     key: pageUrl,
     replyToEventId: event.id,
     query: query,

@@ -39,7 +39,7 @@ export default function UserAvatar({
           }
           radius="full"
           fallback={
-            profile ? (profile.name ? profile.name.substring(0, 1) : "") : ""
+            profile ? (profile.name ? profile.name.substring(0, 1) : "?") : "?"
           }
         />
       </Link>

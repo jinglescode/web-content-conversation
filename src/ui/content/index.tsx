@@ -9,6 +9,9 @@ import PageCard from "~ui/content/PageCard";
 import { merge } from "lodash";
 import { DEFAULT_SETTINGS } from "~constants/settings";
 import { NostrProvider } from "~lib/nostr/NostrProvider";
+import { useNostrStore } from "~lib/zustand/nostr";
+import { URL } from "url";
+import parseUrl from "~lib/parse-url";
 
 export default function UiContent() {
   const setPageTitle = useAppStore((state) => state.setPageTitle);
@@ -17,18 +20,22 @@ export default function UiContent() {
   const settings = useAppStore((state) => state.settings);
   const setSettings = useAppStore((state) => state.setSettings);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const user = useNostrStore((state) => state.user);
 
-  function handlePageUpdate(title, url, domain) {
-    setPageUrl(url);
+  function handlePageUpdate(title, tabUrl) {
+    const _url = parseUrl(tabUrl);
+    const pageUrl = `${_url.protocol}://${_url.host}${_url.pathname}`;
+
+    setPageUrl(pageUrl);
     setPageTitle(title);
-    setDomain(domain);
+    setDomain(_url.host);
   }
 
   useEffect(() => {
     async function getOnloadTab() {
       //@ts-ignore
       const tab = await messageBackgroundRelay("tabs/query-active");
-      handlePageUpdate(tab.title, tab.url, window.location.hostname);
+      handlePageUpdate(tab.title, tab.url);
       //@ts-ignore
       let settings = await messageBackgroundRelay("storage/get-settings");
       if (settings === undefined) {
@@ -39,7 +46,6 @@ export default function UiContent() {
       setSettings(settings);
       setLoaded(true);
     }
-    console.log(1);
     getOnloadTab();
   }, []);
 
@@ -49,11 +55,7 @@ export default function UiContent() {
         chrome.runtime.onMessage.addListener(
           function (request, sender, sendResponse) {
             if (request.ext === EXTENSION_KEY) {
-              handlePageUpdate(
-                request.params.title,
-                request.params.url,
-                window.location.hostname
-              );
+              handlePageUpdate(request.params.title, request.params.url);
             }
           }
         );
