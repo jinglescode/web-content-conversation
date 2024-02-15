@@ -1,7 +1,7 @@
 {
   "name": "satcom",
   "displayName": "Satcom - Collaborative layer for the Internet",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Adding collaborative layer to your Internet browsing experience.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
@@ -23,6 +23,7 @@
     "@tanstack/react-query": "^5.17.19",
     "lodash": "^4.17.21",
     "next": "14.0.2",
+    "nostr-login": "^1.0.11",
     "nostr-tools": "^2.1.4",
     "parse-path": "^7.0.0",
     "plasmo": "0.84.2",
@@ -58,7 +59,8 @@
       {
         "resources": [
           "assets/icon.png",
-          "assets/icon.svg"
+          "assets/icon.svg",
+          "assets/web_accessible_resources.js"
         ],
         "matches": [
           "<all_urls>"

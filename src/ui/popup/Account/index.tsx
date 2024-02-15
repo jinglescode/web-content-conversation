@@ -4,16 +4,13 @@ import Npub from "./Npub";
 import Nsec from "./Nsec";
 import Signout from "./Signout";
 import { useNostrStore } from "~lib/zustand/nostr";
-import Welcome from "./Welcome";
-import { useState } from "react";
-import UserCreate from "./UserCreate";
 import { NostrProvider } from "~lib/nostr/NostrProvider";
 import Loading from "~ui/common/Loading";
+import Welcome from "./Welcome";
 
 export default function Account() {
   const user = useNostrStore((state) => state.user);
-  const [createScreen, setCreateScreen] = useState<boolean>(false);
-  
+
   return (
     <>
       <NostrProvider>
@@ -33,10 +30,8 @@ export default function Account() {
               <Signout />
             </Table.Body>
           </Table.Root>
-        ) : createScreen ? (
-          <UserCreate setCreateScreen={setCreateScreen} />
         ) : (
-          <Welcome setCreateScreen={setCreateScreen} />
+          <Welcome />
         )}
       </NostrProvider>
     </>

@@ -23,12 +23,14 @@ interface NostrContext {
   nostr: NostrClass;
   createNostrUser: (name: string) => Promise<void>;
   signInNsec: (nsec: string) => Promise<void>;
+  signInNostrLogin: () => Promise<void>;
 }
 
 const NostrContext = createContext<NostrContext>({
   nostr: undefined,
   createNostrUser: undefined,
   signInNsec: undefined,
+  signInNostrLogin: undefined,
 });
 
 export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
@@ -59,11 +61,11 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       pubkey: key.pk,
       nsec: key.nsec,
       npub: key.npub,
+      sk: key.sk,
       type: UserIdentifierType.PrivateKey,
     };
     setUser(user);
 
-    //@ts-ignore
     await messageBackground("storage/set-user", user);
   }
 
@@ -79,16 +81,36 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       const user: UserIdentifier = {
         pubkey: _user.pubkey,
         nsec: nsec,
+        sk: privkey,
         npub: _user.npub,
         type: UserIdentifierType.PrivateKey,
       };
       setUser(user);
 
-      //@ts-ignore
       await messageBackground("storage/set-user", user);
     } else {
       setUser(undefined);
     }
+  }
+
+  async function signInNostrLogin() {
+    let { init, launch } = await import("nostr-login");
+
+    await init({ bunkers: "nsec.app,nsecbunker.com" });
+    await launch({});
+    const info = JSON.parse(window.localStorage.getItem("__nostrlogin_nip46"));
+
+    const npub = await nip19.npubEncode(info.pubkey);
+
+    const user: UserIdentifier = {
+      pubkey: info.pubkey,
+      sk: info.sk,
+      npub: npub,
+      type: UserIdentifierType.Nip46,
+    };
+    setUser(user);
+
+    await messageBackground("storage/set-user", user);
   }
 
   useEffect(() => {
@@ -98,8 +120,8 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       try {
         const _user = await _getUserFromStorage(_nostr);
         if (_user) {
-          const privkey = nip19.decode(_user.nsec).data as string;
-          const signer = new NDKPrivateKeySigner(privkey);
+          //@ts-ignore
+          const signer = new NDKPrivateKeySigner(_user.sk);
           await _nostr.init(signer);
           _user.type = UserIdentifierType.PrivateKey;
           setUser(_user);
@@ -114,7 +136,9 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
   }, []);
 
   return (
-    <NostrContext.Provider value={{ nostr, createNostrUser, signInNsec }}>
+    <NostrContext.Provider
+      value={{ nostr, createNostrUser, signInNsec, signInNostrLogin }}
+    >
       {children}
     </NostrContext.Provider>
   );

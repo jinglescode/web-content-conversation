@@ -6,7 +6,6 @@ import {
   ReaderIcon,
 } from "@radix-ui/react-icons";
 import { Avatar, Button, Flex } from "@radix-ui/themes";
-
 import { useAppStore } from "~lib/zustand/app";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { AppScreens } from "~types/app/AppScreens";
@@ -34,6 +33,7 @@ export default function Controls() {
           <Avatar src={icon} fallback="" style={{ borderRadius: "initial" }} />
         )}
       </Button>
+
       {isDrawerShowing && (
         <>
           {page == AppScreens.Feed && (

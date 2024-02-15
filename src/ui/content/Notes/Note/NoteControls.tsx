@@ -124,7 +124,7 @@ export default function NoteControls({
           <Button
             variant="ghost"
             onClick={() => {
-              window.location.href = `${NOSTR_REDIRECT_URL}${event.id}`;
+              window.open(`${NOSTR_REDIRECT_URL}${event.id}`, "_blank");
             }}
             className="h-5 w-auto"
           >
