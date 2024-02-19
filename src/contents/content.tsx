@@ -9,6 +9,6 @@ export const getStyle = () => {
   return style
 }
 
-export default function ContentPage() {
+export default function IndexContents() {
   return <UiContent />
 }

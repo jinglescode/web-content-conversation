@@ -11,9 +11,7 @@ export default function NostrLogin() {
   return (
     <Box p="4">
       <Flex justify="center">
-        <Button variant="classic" onClick={() => login()}>
-          Log in with Nostr Login
-        </Button>
+        <Button onClick={() => login()}>Log in with Nostr Login</Button>
       </Flex>
     </Box>
   );

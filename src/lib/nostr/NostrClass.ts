@@ -52,12 +52,29 @@ export default class NostrClass {
       hexpubkey: pubkey,
     });
 
-    // await _user.fetchProfile(); // todo: this is not working? it gets stuck?
+    await _user.fetchProfile();
 
     if (_user.profile === undefined) {
       _user.profile = {};
     }
     _user.profile.name = name;
+
+    await _user.publish();
+  }
+
+  public async updateProfileImage(pubkey: string, imageUrl: string) {
+    if (this.ndk === undefined) return;
+
+    const _user = this.ndk.getUser({
+      hexpubkey: pubkey,
+    });
+
+    await _user.fetchProfile();
+
+    if (_user.profile === undefined) {
+      _user.profile = {};
+    }
+    _user.profile.image = imageUrl;
 
     await _user.publish();
   }

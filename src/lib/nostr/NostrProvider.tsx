@@ -18,6 +18,7 @@ import {
 import { _createNostrKey } from "./createNostrKey";
 import { _getUserFromStorage } from "./getUserFromStorage";
 import NostrClass from "./NostrClass";
+import { bytesToHex } from "@noble/hashes/utils";
 
 interface NostrContext {
   nostr: NostrClass;
@@ -49,9 +50,10 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
 
   async function createNostrUser(name: string) {
     const key = await _createNostrKey(nostr);
+    const privkey = bytesToHex(key.sk);
 
     //@ts-ignore
-    const signer = new NDKPrivateKeySigner(key.sk);
+    const signer = new NDKPrivateKeySigner(privkey);
 
     await nostr.init(signer);
 
@@ -61,7 +63,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       pubkey: key.pk,
       nsec: key.nsec,
       npub: key.npub,
-      sk: key.sk,
+      sk: privkey,
       type: UserIdentifierType.PrivateKey,
     };
     setUser(user);
@@ -70,7 +72,9 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
   }
 
   async function signInNsec(nsec: string) {
-    const privkey = nip19.decode(nsec).data as string;
+    const decodedPrivkey = nip19.decode(nsec);
+    //@ts-ignore
+    const privkey = bytesToHex(decodedPrivkey.data);
 
     const signer = new NDKPrivateKeySigner(privkey);
     const _user = await signer.user();
@@ -123,7 +127,6 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
           //@ts-ignore
           const signer = new NDKPrivateKeySigner(_user.sk);
           await _nostr.init(signer);
-          _user.type = UserIdentifierType.PrivateKey;
           setUser(_user);
         } else {
           setUser(undefined);

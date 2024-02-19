@@ -9,7 +9,7 @@ import { useNostr } from "~lib/nostr/NostrProvider";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function DisplayName() {
+export default function ProfileImage() {
   const queryClient = useQueryClient();
 
   const { nostr } = useNostr();
@@ -27,7 +27,7 @@ export default function DisplayName() {
 
   async function updateName() {
     setLoading(true);
-    await nostr.updateUserName(user.pubkey, userInput);
+    await nostr.updateProfileImage(user.pubkey, userInput);
 
     queryClient.invalidateQueries({
       queryKey: ["user", user.pubkey],
@@ -38,10 +38,10 @@ export default function DisplayName() {
   }
 
   return (
-    <Row label="Update display name">
+    <Row label="Update profile image">
       <Flex gap="2">
         <TextField.Input
-          placeholder="Display name"
+          placeholder="Image URL"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           style={{ marginRight: "4px" }}

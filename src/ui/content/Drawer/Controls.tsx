@@ -11,6 +11,7 @@ import { useNostrStore } from "~lib/zustand/nostr";
 import { AppScreens } from "~types/app/AppScreens";
 import { NotesView } from "~types/app/NotesView";
 import icon from "../../../../assets/icon.svg";
+import { messageBackground } from "~lib/chrome";
 
 export default function Controls() {
   const isDrawerShowing = useAppStore((state) => state.isDrawerShowing);
@@ -21,11 +22,16 @@ export default function Controls() {
   const notesView = useAppStore((state) => state.notesView);
   const setNotesView = useAppStore((state) => state.setNotesView);
 
+  async function openSidePanel() {
+    await messageBackground("sidepanel/open-panel");
+  }
+
   return (
     <Flex gap="2" direction="column" style={{ margin: "8px" }}>
       <Button
         variant={isDrawerShowing ? "classic" : "ghost"}
-        onClick={() => setDrawerShowing(!isDrawerShowing)}
+        // onClick={() => setDrawerShowing(!isDrawerShowing)}
+        onClick={() => openSidePanel()}
       >
         {isDrawerShowing ? (
           <DoubleArrowRightIcon width="16" height="16" />

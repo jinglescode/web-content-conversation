@@ -5,7 +5,7 @@ export const EXPLICIT_RELAY_URLS = [
   "wss://nostr.mutinywallet.com",
 ];
 
-export const STALE_TIME = 0; // 1000 * 60 * 60 * 24
+export const STALE_TIME = 1000 * 60 * 60 * 24;
 
 export const RELAY = "wss://relay.damus.io";
 

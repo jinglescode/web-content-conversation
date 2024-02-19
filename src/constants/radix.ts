@@ -1,2 +1,2 @@
 export const ACCENT_COLOR = "gray"
-export const HIGHLIGHT_COLOR = "crimson"
+export const HIGHLIGHT_COLOR = "purple"

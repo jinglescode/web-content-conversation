@@ -1,5 +1,4 @@
 import { Box, Flex, Table } from "@radix-ui/themes";
-
 import Npub from "./Npub";
 import Nsec from "./Nsec";
 import Signout from "./Signout";
@@ -7,6 +6,8 @@ import { useNostrStore } from "~lib/zustand/nostr";
 import { NostrProvider } from "~lib/nostr/NostrProvider";
 import Loading from "~ui/common/Loading";
 import Welcome from "./Welcome";
+import DisplayName from "./DisplayName";
+import ProfileImage from "./ProfileImage";
 
 export default function Account() {
   const user = useNostrStore((state) => state.user);
@@ -23,7 +24,8 @@ export default function Account() {
         ) : user ? (
           <Table.Root>
             <Table.Body style={{ verticalAlign: "middle" }}>
-              {/* <DisplayName /> */} {/* todo: removed until we can fetch */}
+              <DisplayName />
+              <ProfileImage />
               <Npub />
               <Nsec />
               {/* <Relay /> */} {/* todo: future */}

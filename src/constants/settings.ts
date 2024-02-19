@@ -13,9 +13,10 @@ export const DEFAULT_SETTINGS: Settings = {
     relays: EXPLICIT_RELAY_URLS,
   },
   notes: {
-    shorten: false,
+    shorten: true,
     credit: true,
     sortBy: "time",
     nostrIcons: true,
+    wineSearch: false,
   },
 };

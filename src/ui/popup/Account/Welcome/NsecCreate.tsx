@@ -1,5 +1,5 @@
 import { PersonIcon } from "@radix-ui/react-icons";
-import { Box, Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { useNostr } from "~lib/nostr/NostrProvider";
 import { usePopupStore } from "~lib/zustand/popup";
@@ -28,7 +28,7 @@ export default function NsecCreate() {
               <PersonIcon height="16" width="16" />
             </TextField.Slot>
             <TextField.Input
-              placeholder="Enter your display name"
+              placeholder="Your display name"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               disabled={loading}

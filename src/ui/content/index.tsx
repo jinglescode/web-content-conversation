@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { EXTENSION_KEY } from "~constants/chrome";
 
-import { messageBackgroundRelay } from "~lib/chrome";
+import { messageBackground } from "~lib/chrome";
 import { useAppStore } from "~lib/zustand/app";
 import UI from "~ui/common/UI";
 import Drawer from "~ui/content/Drawer";
@@ -33,10 +33,10 @@ export default function UiContent() {
   useEffect(() => {
     async function getOnloadTab() {
       //@ts-ignore
-      const tab = await messageBackgroundRelay("tabs/query-active");
+      const tab = await messageBackground("tabs/query-active");
       handlePageUpdate(tab.title, tab.url);
       //@ts-ignore
-      let settings = await messageBackgroundRelay("storage/get-settings");
+      let settings = await messageBackground("storage/get-settings");
       if (settings === undefined) {
         settings = DEFAULT_SETTINGS;
       } else {
@@ -46,8 +46,6 @@ export default function UiContent() {
       setLoaded(true);
     }
     getOnloadTab();
-
-    // Inject();
   }, []);
 
   useEffect(() => {

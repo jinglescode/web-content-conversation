@@ -14,5 +14,6 @@ export type Settings = {
     credit: boolean;
     sortBy: string;
     nostrIcons: boolean;
+    wineSearch: boolean;
   };
 };
