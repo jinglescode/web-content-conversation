@@ -33,12 +33,16 @@ export default function UiSidebar() {
     try {
       chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         if (changeInfo.title) {
-          handlePageUpdate(tab.title, tab.url);
+          if (tab.active && tab.url && tab.title) {
+            handlePageUpdate(tab.title, tab.url);
+          }
         }
       });
       chrome.tabs.onActivated.addListener(function (activeInfo) {
         chrome.tabs.get(activeInfo.tabId, function (tab) {
-          handlePageUpdate(tab.title, tab.url);
+          if (tab.active && tab.url && tab.title) {
+            handlePageUpdate(tab.title, tab.url);
+          }
         });
       });
     } catch (error) {}
