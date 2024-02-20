@@ -9,4 +9,5 @@ export type UserIdentifier = {
   sk: string|Uint8Array;
   npub: string;
   type: UserIdentifierType;
+  relays?: string[];
 };

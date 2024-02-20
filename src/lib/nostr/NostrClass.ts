@@ -2,6 +2,7 @@ import NDK, {
   NDKEvent,
   NDKPrivateKeySigner,
   type NDKFilter,
+  NDKNip46Signer,
 } from "@nostr-dev-kit/ndk";
 
 import { EXPLICIT_RELAY_URLS } from "~constants/nostr";
@@ -12,15 +13,19 @@ export default class NostrClass {
 
   constructor({}: {}) {}
 
-  public async init(signer?: NDKPrivateKeySigner) {
+  public async init(
+    signer?: NDKPrivateKeySigner | NDKNip46Signer,
+    relays = []
+  ) {
     try {
       const ndk = new NDK({
         explicitRelayUrls: EXPLICIT_RELAY_URLS,
         signer: signer,
       });
+      for (const r of relays) ndk.addExplicitRelay(r, undefined);
       await ndk.connect();
       this.ndk = ndk;
-      if (signer) this.signer = signer;
+      // if (signer) this.signer = signer;
     } catch (e) {
       console.error(`[NostrClass] init ${e}`);
     }

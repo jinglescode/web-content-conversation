@@ -2,7 +2,6 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { Button, Flex, IconButton, ScrollArea, Text } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { HIGHLIGHT_COLOR } from "~constants/radix";
 import { useNotes } from "~lib/nostr/useNotes";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { useSidePanelStore } from "~lib/zustand/sidepanel";
@@ -53,7 +52,7 @@ export default function FeedContent({ isGlobal }: { isGlobal: boolean }) {
   if (isFetching)
     return (
       <div
-        className="h-full"
+        className="h-[calc(100vh-113px)]"
         onClick={() => {
           queryClient.invalidateQueries({
             queryKey: ["note", currentTab.url],

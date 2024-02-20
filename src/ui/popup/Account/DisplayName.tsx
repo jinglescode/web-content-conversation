@@ -49,7 +49,9 @@ export default function DisplayName() {
         <Button
           onClick={() => updateName()}
           disabled={
-            loading || userInput.length == 0 || userInput == profile.name
+            loading ||
+            userInput.length == 0 ||
+            (profile ? userInput == profile.name : false)
           }
         >
           {loading ? (

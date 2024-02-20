@@ -20,12 +20,12 @@ export default function ProfileImage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (profile !== undefined && profile.name) {
-      setUserInput(profile.name);
+    if (profile !== undefined && profile.image) {
+      setUserInput(profile.image);
     }
   }, [profile]);
 
-  async function updateName() {
+  async function updateImage() {
     setLoading(true);
     await nostr.updateProfileImage(user.pubkey, userInput);
 
@@ -47,9 +47,11 @@ export default function ProfileImage() {
           style={{ marginRight: "4px" }}
         />
         <Button
-          onClick={() => updateName()}
+          onClick={() => updateImage()}
           disabled={
-            loading || userInput.length == 0 || userInput == profile.name
+            loading ||
+            userInput.length == 0 ||
+            (profile ? userInput == profile.image : false)
           }
         >
           {loading ? (

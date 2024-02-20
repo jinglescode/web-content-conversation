@@ -1,4 +1,4 @@
-import { NDKPrivateKeySigner } from "@nostr-dev-kit/ndk";
+import { NDKNip46Signer, NDKPrivateKeySigner } from "@nostr-dev-kit/ndk";
 import { nip19 } from "nostr-tools";
 import {
   createContext,
@@ -68,6 +68,7 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
     };
     setUser(user);
 
+    //@ts-ignore
     await messageBackground("storage/set-user", user);
   }
 
@@ -91,7 +92,10 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       };
       setUser(user);
 
+      //@ts-ignore
       await messageBackground("storage/set-user", user);
+
+      load();
     } else {
       setUser(undefined);
     }
@@ -111,30 +115,50 @@ export const NostrProvider = ({ children }: PropsWithChildren<object>) => {
       sk: info.sk,
       npub: npub,
       type: UserIdentifierType.Nip46,
+      relays: info.relay,
     };
     setUser(user);
 
+    //@ts-ignore
     await messageBackground("storage/set-user", user);
+
+    load();
   }
 
-  useEffect(() => {
-    async function load() {
-      const _nostr = await initNostrClass();
-      setNostr(_nostr);
-      try {
-        const _user = await _getUserFromStorage(_nostr);
-        if (_user) {
+  async function load() {
+    const _nostr = await initNostrClass();
+    setNostr(_nostr);
+    try {
+      const _user = await _getUserFromStorage(_nostr);
+      if (_user) {
+        if (_user.type === UserIdentifierType.PrivateKey) {
           //@ts-ignore
           const signer = new NDKPrivateKeySigner(_user.sk);
           await _nostr.init(signer);
-          setUser(_user);
-        } else {
-          setUser(undefined);
         }
-      } catch (e) {
-        console.error(`[NostrProvider] load - ${e}`);
+        if (_user.type === UserIdentifierType.Nip46) {
+          //@ts-ignore
+          const localSigner = new NDKPrivateKeySigner(_user.sk);
+          const remoteSigner = new NDKNip46Signer(
+            _nostr.ndk,
+            _user.pubkey,
+            localSigner
+          );
+          remoteSigner.user().then(async (user) => {
+            await remoteSigner.blockUntilReady();
+            await _nostr.init(remoteSigner, _user.relays);
+          });
+        }
+        setUser(_user);
+      } else {
+        setUser(undefined);
       }
+    } catch (e) {
+      console.error(`[NostrProvider] load - ${e}`);
     }
+  }
+
+  useEffect(() => {
     load();
   }, []);
 
