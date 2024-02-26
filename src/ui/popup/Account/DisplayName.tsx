@@ -20,7 +20,7 @@ export default function DisplayName() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (profile !== undefined) {
+    if (profile !== undefined && profile.name) {
       setUserInput(profile.name);
     }
   }, [profile]);
@@ -38,10 +38,10 @@ export default function DisplayName() {
   }
 
   return (
-    <Row label="Display Name">
+    <Row label="Update display name">
       <Flex gap="2">
         <TextField.Input
-          placeholder="Your display name"
+          placeholder="Display name"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           style={{ marginRight: "4px" }}
@@ -49,7 +49,9 @@ export default function DisplayName() {
         <Button
           onClick={() => updateName()}
           disabled={
-            loading || userInput.length == 0 || userInput == profile.name
+            loading ||
+            userInput.length == 0 ||
+            (profile ? userInput == profile.name : false)
           }
         >
           {loading ? (

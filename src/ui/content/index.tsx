@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { EXTENSION_KEY } from "~constants/chrome";
 
-import { messageBackgroundRelay } from "~lib/chrome";
+import { messageBackground } from "~lib/chrome";
 import { useAppStore } from "~lib/zustand/app";
 import UI from "~ui/common/UI";
 import Drawer from "~ui/content/Drawer";
@@ -10,7 +10,6 @@ import { merge } from "lodash";
 import { DEFAULT_SETTINGS } from "~constants/settings";
 import { NostrProvider } from "~lib/nostr/NostrProvider";
 import { useNostrStore } from "~lib/zustand/nostr";
-import { URL } from "url";
 import parseUrl from "~lib/parse-url";
 
 export default function UiContent() {
@@ -34,10 +33,10 @@ export default function UiContent() {
   useEffect(() => {
     async function getOnloadTab() {
       //@ts-ignore
-      const tab = await messageBackgroundRelay("tabs/query-active");
+      const tab = await messageBackground("tabs/query-active");
       handlePageUpdate(tab.title, tab.url);
       //@ts-ignore
-      let settings = await messageBackgroundRelay("storage/get-settings");
+      let settings = await messageBackground("storage/get-settings");
       if (settings === undefined) {
         settings = DEFAULT_SETTINGS;
       } else {
@@ -94,3 +93,59 @@ export default function UiContent() {
     </UI>
   );
 }
+
+// to get window.nostr using web_accessible_resources.js
+
+// const nostr = {
+//   async getPublicKey() {
+//     await ensureSigner();
+//     return signer.remotePubkey;
+//   },
+//   async signEvent(event) {
+//     await ensureSigner();
+//     event.pubkey = signer.remotePubkey;
+//     event.id = getEventHash(event);
+//     event.sig = await signer.sign(event);
+//     return event;
+//   },
+//   async getRelays() {
+//     // FIXME implement!
+//     return {};
+//   },
+//   nip04: {
+//     async encrypt(pubkey, plaintext) {
+//       await ensureSigner();
+//       return signer.encrypt(pubkey, plaintext);
+//     },
+//     async decrypt(pubkey, ciphertext) {
+//       await ensureSigner();
+//       return signer.decrypt(pubkey, ciphertext);
+//     },
+//   },
+// };
+
+// function Inject() {
+//   const handleFromWeb = async (event) => {
+//     if (event.data.from) {
+//       const data = event.data.data;
+//       if (event.data.from == "web_accessible_resources.js") {
+//         console.log(`process from ${event.data.from}`);
+//         console.log(data);
+//         window.nostr = data;
+//       }
+//     }
+//   };
+//   window.addEventListener("message", handleFromWeb);
+
+//   function injectScript(file_path, tag) {
+//     var node = document.getElementsByTagName(tag)[0];
+//     var script = document.createElement("script");
+//     script.setAttribute("type", "text/javascript");
+//     script.setAttribute("src", file_path);
+//     node.appendChild(script);
+//   }
+//   injectScript(
+//     chrome.runtime.getURL("assets/web_accessible_resources.js"),
+//     "body"
+//   );
+// }

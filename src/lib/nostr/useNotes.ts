@@ -5,6 +5,7 @@ import { STALE_TIME } from "~constants/nostr";
 
 import { useNostr } from "./NostrProvider";
 import { wineSearch } from "~lib/nostr.wine";
+import { useAppStore } from "~lib/zustand/app";
 
 export function useNotes({
   key,
@@ -13,6 +14,8 @@ export function useNotes({
   key: string;
   query: boolean;
 }) {
+  const settings = useAppStore((state) => state.settings);
+
   const { nostr } = useNostr();
   const { status, data, error, isFetching } = useQuery({
     enabled: query == true && !!nostr,
@@ -26,15 +29,13 @@ export function useNotes({
       let events = await nostr.fetchEvents(filter);
 
       // get notes by wine
-      let _events = await wineSearch(key);
-      events = [...events, ..._events];
+      if (settings.notes.wineSearch) {
+        let _events = await wineSearch(key);
+        events = [...events, ..._events];
+      }
 
       // get unique
       events = [...new Map(events.map((item) => [item.id, item])).values()];
-
-      // events.sort((a, b) => {
-      //   return b.created_at - a.created_at;
-      // });
 
       return events;
     },

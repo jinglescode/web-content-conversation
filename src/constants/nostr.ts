@@ -3,9 +3,10 @@ export const EXPLICIT_RELAY_URLS = [
   "wss://relay.nostr.band",
   "wss://nos.lol",
   "wss://nostr.mutinywallet.com",
+  "wss://relay.nsec.app",
 ];
 
-export const STALE_TIME = 0; // 1000 * 60 * 60 * 24
+export const STALE_TIME = 1000 * 60 * 60 * 24;
 
 export const RELAY = "wss://relay.damus.io";
 

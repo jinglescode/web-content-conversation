@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Storage } from "@plasmohq/storage";
 
 import { POPUP_HEIGHT } from "~constants/popup";
-import { useNostrStore } from "~lib/zustand/nostr";
 import { usePopupStore } from "~lib/zustand/popup";
 import { type Settings } from "~types/Settings";
 import UI from "~ui/common/UI";
@@ -17,21 +16,12 @@ import { merge } from "lodash";
 import About from "./About";
 
 export default function UiPopup() {
-  const user = useNostrStore((state) => state.user);
-
   return (
-    <div className="popup_container">
-      <UI>
-        {/* {user === undefined ? (
-          <div style={{ height: POPUP_HEIGHT }}>
-            <About />
-          </div>
-        ) : (
-          <Loaded />
-        )} */}
+    <UI>
+      <div className="bg-neutral-800">
         <Loaded />
-      </UI>
-    </div>
+      </div>
+    </UI>
   );
 }
 
@@ -65,26 +55,26 @@ function Loaded() {
         <Tabs.Trigger value="posts">Posts</Tabs.Trigger>
       </Tabs.List>
 
-      <ScrollArea
+      {/* <ScrollArea
         type="always"
         scrollbars="vertical"
         style={{ height: POPUP_HEIGHT }}
-      >
-        <Box>
-          <Tabs.Content value="appearance">
-            <Appearance />
-          </Tabs.Content>
-          <Tabs.Content value="account">
-            <Account />
-          </Tabs.Content>
-          <Tabs.Content value="posts">
-            <Posts />
-          </Tabs.Content>
-          <Tabs.Content value="about">
-            <About />
-          </Tabs.Content>
-        </Box>
-      </ScrollArea>
+      > */}
+      <Box style={{ height: POPUP_HEIGHT }}>
+        <Tabs.Content value="appearance">
+          <Appearance />
+        </Tabs.Content>
+        <Tabs.Content value="account">
+          <Account />
+        </Tabs.Content>
+        <Tabs.Content value="posts">
+          <Posts />
+        </Tabs.Content>
+        <Tabs.Content value="about">
+          <About />
+        </Tabs.Content>
+      </Box>
+      {/* </ScrollArea> */}
     </Tabs.Root>
   );
 }

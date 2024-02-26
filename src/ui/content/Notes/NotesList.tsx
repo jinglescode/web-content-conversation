@@ -1,13 +1,11 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { Button, Flex, ScrollArea, Text } from "@radix-ui/themes";
-
 import { useAppStore } from "~lib/zustand/app";
 import Loading from "~ui/common/Loading";
-
-import Note from "./Note";
 import { AppScreens } from "~types/app/AppScreens";
 import { useNostrStore } from "~lib/zustand/nostr";
 import type { NDKEvent } from "@nostr-dev-kit/ndk";
+import Note from "./Note";
 
 export default function NotesList({ notes }: { notes: NDKEvent[] }) {
   const settings = useAppStore((state) => state.settings);

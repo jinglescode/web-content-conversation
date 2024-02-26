@@ -8,12 +8,13 @@ import { pubkeyToNpub } from "~lib/nostr/resolvers";
 export default function UserAvatar({
   pubkey,
   size = "3",
+  isLink = true,
 }: {
   pubkey: string | undefined;
   size?: "3" | "9";
+  isLink?: boolean;
 }) {
   const queryClient = useQueryClient();
-  const { data: profile } = useUserProfile(pubkey);
 
   if (pubkey == undefined) return <></>;
   let npub = pubkeyToNpub(pubkey);
@@ -27,22 +28,35 @@ export default function UserAvatar({
         });
       }}
     >
-      <Link href={`${NOSTR_REDIRECT_URL}${npub}`}>
-        <Avatar
-          size={size}
-          src={
-            profile !== undefined
-              ? profile.image
-                ? profile.image
-                : undefined
-              : chrome.runtime.getURL("assets/icon.svg")
-          }
-          radius="full"
-          fallback={
-            profile ? (profile.name ? profile.name.substring(0, 1) : "?") : "?"
-          }
-        />
-      </Link>
+      {isLink ? (
+        <Link href={`${NOSTR_REDIRECT_URL}${npub}`}>
+          <UserImage pubkey={pubkey} size={size} />
+        </Link>
+      ) : (
+        <UserImage pubkey={pubkey} size={size} />
+      )}
     </div>
+  );
+}
+
+function UserImage({ pubkey, size }: { pubkey: string; size?: "3" | "9" }) {
+  const { data: profile } = useUserProfile(pubkey);
+
+  return (
+    <Avatar
+      size={size}
+      src={
+        profile !== undefined
+          ? profile.image
+            ? profile.image
+            : chrome.runtime.getURL("assets/icon.svg")
+          : chrome.runtime.getURL("assets/icon.svg")
+      }
+      style={{ borderRadius: "initial" }}
+      radius="full"
+      fallback={
+        profile ? (profile.name ? profile.name.substring(0, 1) : "?") : "?"
+      }
+    />
   );
 }

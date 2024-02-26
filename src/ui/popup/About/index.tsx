@@ -1,5 +1,8 @@
-import { HomeIcon, HomeModernIcon } from "@heroicons/react/24/outline";
-import { GitHubLogoIcon, LightningBoltIcon } from "@radix-ui/react-icons";
+import {
+  GitHubLogoIcon,
+  HomeIcon,
+  LightningBoltIcon,
+} from "@radix-ui/react-icons";
 import {
   Flex,
   Avatar,
@@ -24,7 +27,7 @@ export default function About() {
         size="6"
         src={chrome.runtime.getURL("assets/icon.svg")}
         radius="full"
-        fallback=""
+        fallback="Satcom"
         style={{ borderRadius: "initial" }}
       />
       <Heading size="7">{APP_NAME}</Heading>
