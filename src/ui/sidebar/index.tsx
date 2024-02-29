@@ -16,7 +16,15 @@ export default function UiSidebar() {
 
   function handlePageUpdate(title, tabUrl) {
     const _url = parseUrl(tabUrl);
-    const pageUrl = `${_url.protocol}://${_url.host}${_url.pathname}`;
+
+    const queries = Object.keys(_url.query).map((key) => {
+      return `${key}=${_url.query[key]}`;
+    });
+    let pageUrl = `${_url.protocol}://${_url.host}${_url.pathname}`;
+    if (queries.length > 0) {
+      pageUrl = `${pageUrl}?${queries.join("&")}`;
+    }
+
     setCurrentTab({
       url: pageUrl,
       title: title,
