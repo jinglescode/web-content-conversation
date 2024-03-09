@@ -59,12 +59,12 @@ export default function UiSidebar() {
   return (
     <UI>
       <NostrProvider>
-        <div className="h-screen w-screen fixed bg-neutral-800">
+        <div className="h-screen w-screen fixed bg-neutral-900">
           <Inset
             clip="padding-box"
             side="top"
             style={{ height: "73px" }}
-            className="border-b border-neutral-400 bg-neutral-900 p-4"
+            className="p-4"
           >
             <TopBar />
           </Inset>

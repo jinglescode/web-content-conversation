@@ -1,4 +1,9 @@
-import { GlobeIcon, ReaderIcon } from "@radix-ui/react-icons";
+import {
+  Cross1Icon,
+  GearIcon,
+  GlobeIcon,
+  ReaderIcon,
+} from "@radix-ui/react-icons";
 import { Avatar, Box, Button, Flex, Text } from "@radix-ui/themes";
 import { useNostrStore } from "~lib/zustand/nostr";
 import { useSidePanelStore } from "~lib/zustand/sidepanel";
@@ -17,24 +22,6 @@ export default function TopBar() {
     <Flex gap="2" justify="between" className="">
       <Box>
         <Flex gap="1">
-          {(currentScreen == SidePanelScreens.Feed ||
-            currentScreen == SidePanelScreens.GlobalFeed) && (
-            <div>
-              {currentScreen == SidePanelScreens.Feed ? (
-                <ReaderIcon
-                  width="20"
-                  height="20"
-                  onClick={() => setCurrentScreen(SidePanelScreens.GlobalFeed)}
-                />
-              ) : (
-                <GlobeIcon
-                  width="20"
-                  height="20"
-                  onClick={() => setCurrentScreen(SidePanelScreens.Feed)}
-                />
-              )}
-            </div>
-          )}
           <Text
             as="div"
             size="2"
@@ -61,7 +48,7 @@ export default function TopBar() {
         </Flex>
       </Box>
       <Button
-        variant="ghost"
+        variant="soft"
         onClick={() => {
           if (currentScreen != SidePanelScreens.Menu) {
             setCurrentScreen(SidePanelScreens.Menu);
@@ -70,17 +57,7 @@ export default function TopBar() {
           }
         }}
       >
-        {user && user.pubkey ? (
-          <UserAvatar pubkey={user.pubkey} isLink={false} />
-        ) : (
-          <Avatar
-            size="3"
-            src={chrome.runtime.getURL("assets/icon.svg")}
-            radius="full"
-            fallback="?"
-            style={{ borderRadius: "initial" }}
-          />
-        )}
+        {currentScreen == SidePanelScreens.Menu ? <Cross1Icon /> : <GearIcon />}
       </Button>
     </Flex>
   );

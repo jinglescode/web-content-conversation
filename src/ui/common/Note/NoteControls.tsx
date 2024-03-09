@@ -79,7 +79,7 @@ export default function NoteControls({
   return (
     showControls && (
       <>
-        <Flex gap="6">
+        <Flex gap="2">
           {reactions && (
             <>
               <Button

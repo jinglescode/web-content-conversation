@@ -64,7 +64,7 @@ export default function FeedContent({ isGlobal }: { isGlobal: boolean }) {
     );
 
   return (
-    <Flex className="h-[calc(100vh-113px)]" direction="column">
+    <Flex className="h-[calc(100vh-113px)] pt-2" direction="column">
       <ScrollArea type="hover" scrollbars="vertical" className="px-4 pt-2">
         <Flex direction="column" gap="4">
           {notes && (
@@ -86,9 +86,10 @@ export default function FeedContent({ isGlobal }: { isGlobal: boolean }) {
                 <Flex direction="column" align="center" gap="4">
                   <Text>No posts yet</Text>
                   {user ? (
-                    <Button onClick={() => setShowNoteEditor(true)}>
-                      <Pencil1Icon width="16" height="16" /> Write something?
-                    </Button>
+                    <></>
+                    // <Button onClick={() => setShowNoteEditor(true)}>
+                    //   <Pencil1Icon width="16" height="16" /> Write something?
+                    // </Button>
                   ) : (
                     <Text size="2">
                       <a

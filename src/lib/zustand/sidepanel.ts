@@ -27,6 +27,6 @@ export const useSidePanelStore = create<SidePanelState>()((set, get) => ({
   },
   toast: undefined,
   setToast: (toast) => set({ toast }),
-  showNoteEditor: false,
+  showNoteEditor: true,
   setShowNoteEditor: (show) => set({ showNoteEditor: show }),
 }));

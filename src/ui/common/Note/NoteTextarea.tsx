@@ -1,4 +1,14 @@
-import { Box, Button, Checkbox, Flex, Text, TextArea } from "@radix-ui/themes";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  IconButton,
+  Text,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
 import { HIGHLIGHT_COLOR } from "~constants/radix";
 import { useSidePanelStore } from "~lib/zustand/sidepanel";
 
@@ -11,6 +21,7 @@ export default function NoteTextarea({
   showCheckBox = false,
   disabledTextarea = false,
   disabledButton = false,
+  size = "2",
 }: {
   placeholder?: string;
   value: string;
@@ -21,7 +32,32 @@ export default function NoteTextarea({
   checkboxOnChange?: () => void;
   disabledTextarea?: boolean;
   disabledButton?: boolean;
+  size?: "2" | "3";
 }) {
+  return (
+    <Flex direction="column" gap="1" justify="between" className="w-full">
+      <TextField.Root>
+        <TextField.Input
+          placeholder={placeholder}
+          size={size}
+          radius="large"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+        />
+        <TextField.Slot pr="3">
+          <IconButton
+            size="2"
+            variant="ghost"
+            onClick={() => buttonOnClick()}
+            disabled={disabledButton}
+          >
+            <PaperAirplaneIcon height="16" width="16" />
+          </IconButton>
+        </TextField.Slot>
+      </TextField.Root>
+    </Flex>
+  );
+
   return (
     <Flex direction="column" gap="1" justify="between" className="w-full">
       <TextArea
