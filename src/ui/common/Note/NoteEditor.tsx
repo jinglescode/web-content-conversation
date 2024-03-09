@@ -64,20 +64,16 @@ export default function NoteEditor() {
   }, [isSuccess]);
 
   return (
-    <Box
-      grow="1"
-      style={{ width: "100%" }}
-      className="border-t border-neutral-400 pt-2"
-    >
+    <Box grow="1" style={{ width: "100%" }} className="pt-2">
       <Flex direction="column" gap="2" justify="between">
-        <Flex justify="between" px="2">
+        {/* <Flex justify="between" px="2">
           <Box>
             <Text>Post</Text>
           </Box>
           <Button size="4" onClick={() => setShowNoteEditor(false)} color="red" variant="ghost">
             x
           </Button>
-        </Flex>
+        </Flex> */}
         <NoteTextarea
           placeholder="Type your new post here..."
           value={userInput}
@@ -88,6 +84,7 @@ export default function NoteEditor() {
           disabledButton={
             user == undefined || loading || userInput.length === 0
           }
+          size="3"
         />
       </Flex>
     </Box>

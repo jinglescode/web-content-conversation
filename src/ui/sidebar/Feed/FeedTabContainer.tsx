@@ -5,8 +5,8 @@ export default function FeedTabContainer() {
   return (
     <Tabs.Root defaultValue="page">
       <Tabs.List>
-        <Tabs.Trigger value="page">Page Feed</Tabs.Trigger>
-        <Tabs.Trigger value="global">Global Feed</Tabs.Trigger>
+        <Tabs.Trigger value="page">Page</Tabs.Trigger>
+        <Tabs.Trigger value="global">Website</Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="page">
         <FeedContent isGlobal={false} />
