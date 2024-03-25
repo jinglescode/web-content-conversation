@@ -23,6 +23,7 @@ export default function Controls() {
   const setNotesView = useAppStore((state) => state.setNotesView);
 
   async function openSidePanel() {
+    //@ts-ignore
     await messageBackground("sidepanel/open-panel");
   }
 

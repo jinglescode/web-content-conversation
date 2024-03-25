@@ -34,6 +34,7 @@ export default function UiSidebar() {
 
   useEffect(() => {
     async function load() {
+      //@ts-ignore
       const tab = await messageBackground("tabs/query-active");
       handlePageUpdate(tab.title, tab.url);
     }
