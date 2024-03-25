@@ -10,6 +10,7 @@ import About from "~ui/popup/About";
 
 export default function IndexPopup() {
   function open() {
+    //@ts-ignore
     messageBackground("sidepanel/open-panel", {});
     // chrome.sidePanel.setOptions({ path: "sidepanel.html", enabled: true });
   }
