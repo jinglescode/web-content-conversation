@@ -1,11 +1,10 @@
-import demo from "../../../../assets/demo.svg";
+import demo from "../../../../assets/demo.png";
 import Image from "next/image";
 
 export default function Demo() {
   return (
     <div className="mt-4">
       <Image
-        className="w-auto"
         src={demo}
         width={946}
         height={480}
