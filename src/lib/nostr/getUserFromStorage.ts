@@ -48,6 +48,7 @@ export async function _getUserFromStorage(nostr: NostrClass) {
         npub: user.npub,
         type: user.type,
       };
+      //@ts-ignore
       await messageBackground("storage/set-user", _user);
     }
 
