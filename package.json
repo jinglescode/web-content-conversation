@@ -1,7 +1,7 @@
 {
   "name": "satcom",
   "displayName": "Satcom - Collaborative layer for the Internet",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Adding collaborative layer to your Internet browsing experience.",
   "author": "Jingles (me@jingles.me)",
   "scripts": {
@@ -52,8 +52,7 @@
     ],
     "permissions": [
       "activeTab",
-      "tabs",
-      "scripting"
+      "tabs"
     ],
     "web_accessible_resources": [
       {
